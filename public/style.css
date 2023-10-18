@@ -1,0 +1,18 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #0d1117;
+  color: lightgray;
+  margin: auto;
+}
+
+header {
+  background-color: #010409;
+  box-shadow: 0 0.5px 0px 0px #30363d;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-logo {
+  color: #334769;
+  font-size: 40px;
+  padding: 5px;
+}
