@@ -33,15 +33,32 @@ const gameIdMap = JSON.parse(fs.readFileSync('mls_data/gameIds.json', 'utf-8'));
 console.log('Inserting teams...');
 for (let key in teamsMap) {
   const team = teamsMap[key];
-  addTeam(team.team_id, team.team_name, team.team_name_abbrev, team.year_founded, team.year_joined, team.city);
+  const res = await addTeam(
+    team.team_id,
+    team.team_name,
+    team.team_name_abbrev,
+    team.year_founded,
+    team.year_joined,
+    team.city
+  );
 }
 
 // insert players
 console.log('Inserting players...');
 playersByTeamBySeason.forEach(season => {
   season.season_competitor_players.forEach(team => {
-    team.players.forEach(player => {
-      addPlayer(playerIdMap[player.id], player.first_name, player.last_name, player.date_of_birth, player.nationality, player.height, player.weight, player.jersey_number, player.type);
+    team.players.forEach(async player => {
+      const res = await addPlayer(
+        playerIdMap[player.id],
+        player.first_name,
+        player.last_name,
+        player.date_of_birth,
+        player.nationality,
+        player.height,
+        player.weight,
+        player.jersey_number,
+        player.type
+      );
     });
   });
 });
@@ -49,7 +66,7 @@ playersByTeamBySeason.forEach(season => {
 // insert games
 console.log('Inserting games...');
 matchDataBySeason.forEach(chunk => {
-  chunk.summaries.forEach(summary => {
+  chunk.summaries.forEach(async summary => {
     let home_team_id = null;
     let away_team_id = null;
     if (summary.sport_event_status.status != 'postponed' && summary.sport_event_status.status != 'cancelled' && summary.sport_event_status.status != 'not_started') {
@@ -60,16 +77,52 @@ matchDataBySeason.forEach(chunk => {
           away_team_id = teamsMap[team.id].team_id;
         }
       });
-      let date = summary.sport_event.start_time.split('+')[0].replace('T', ' ');
-      let game_type = summary.sport_event.sport_event_context.stage.phase;
-      let round = game_type == 'regular season' ? null : summary.sport_event.sport_event_context.round.name;
-      addGame(gameIdMap[summary.sport_event.id], date, summary.sport_event_status.home_score, summary.sport_event_status.away_score, home_team_id, away_team_id, game_type, round);
+      const date = summary.sport_event.start_time.split('+')[0].replace('T', ' ');
+      const game_type = summary.sport_event.sport_event_context.stage.phase;
+      const round = game_type == 'regular season' ? null : summary.sport_event.sport_event_context.round.name;
+      const res = await addGame(
+        gameIdMap[summary.sport_event.id],
+        date,
+        summary.sport_event_status.home_score,
+        summary.sport_event_status.away_score,
+        home_team_id,
+        away_team_id,
+        game_type,
+        round
+      );
     }
   });
 });
 
 // insert player game stats
-// console.log('Inserting player match stats...');
+console.log('Inserting player match stats...');
+matchDataBySeason.forEach(chunk => {
+  chunk.summaries.forEach(summary => {
+    if (summary.sport_event_status.status != 'postponed' && summary.sport_event_status.status != 'cancelled' && summary.sport_event_status.status != 'not_started') {
+      summary.statistics.totals.competitors.forEach(team => {
+        if (team.players != null) {
+          team.players.forEach(async player => {
+            const stats = player.statistics;
+            const res = await addPlayerGameStats(
+              playerIdMap[player.id],
+              gameIdMap[summary.sport_event.id],
+              summary.sport_event.sport_event_context.season.year,
+              stats.goals_scored,
+              stats.assists,
+              stats.shots_faced_saved,
+              stats.shots_faced_total,
+              stats.goals_conceded,
+              stats.shots_on_target,
+              stats.minutes_played,
+              stats.yellow_cards,
+              stats.red_cards
+            );
+          });
+        }
+      });
+    }
+  });
+});
 
 // insert players to teams
 // console.log('Inserting players to teams...');
