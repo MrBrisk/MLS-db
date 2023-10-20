@@ -1,0 +1,234 @@
+{
+  "sr:competitor:2502": {
+    "team_id": 1,
+    "team_name": "D.C. United",
+    "team_name_abbrev": "DC",
+    "city": "Washington, D.C.",
+    "year_founded": 1994,
+    "year_joined": 1996
+  },
+  "sr:competitor:2504": {
+    "team_id": 2,
+    "team_name": "Columbus Crew",
+    "team_name_abbrev": "CLB",
+    "city": "Columbus",
+    "year_founded": 1994,
+    "year_joined": 1996
+  },
+  "sr:competitor:2505": {
+    "team_id": 3,
+    "team_name": "Chicago Fire FC",
+    "team_name_abbrev": "CHI",
+    "city": "Chicago",
+    "year_founded": 1997,
+    "year_joined": 1998
+  },
+  "sr:competitor:2506": {
+    "team_id": 4,
+    "team_name": "New York Red Bulls",
+    "team_name_abbrev": "NY",
+    "city": "Harrison",
+    "year_founded": 1994,
+    "year_joined": 1996
+  },
+  "sr:competitor:2508": {
+    "team_id": 5,
+    "team_name": "Houston Dynamo FC",
+    "team_name_abbrev": "HOU",
+    "city": "Houston",
+    "year_founded": 2005,
+    "year_joined": 2006
+  },
+  "sr:competitor:2509": {
+    "team_id": 6,
+    "team_name": "Sporting Kansas City",
+    "team_name_abbrev": "SKC",
+    "city": "Kansas City",
+    "year_founded": 1995,
+    "year_joined": 1996
+  },
+  "sr:competitor:2510": {
+    "team_id": 7,
+    "team_name": "Colorado Rapids",
+    "team_name_abbrev": "COL",
+    "city": "Denver",
+    "year_founded": 1995,
+    "year_joined": 1996
+  },
+  "sr:competitor:2511": {
+    "team_id": 8,
+    "team_name": "New England Revolution",
+    "team_name_abbrev": "NE",
+    "city": "Foxborough",
+    "year_founded": 1995,
+    "year_joined": 1996
+  },
+  "sr:competitor:2512": {
+    "team_id": 9,
+    "team_name": "FC Dallas",
+    "team_name_abbrev": "DAL",
+    "city": "Dallas",
+    "year_founded": 1995,
+    "year_joined": 1996
+  },
+  "sr:competitor:2513": {
+    "team_id": 10,
+    "team_name": "Los Angeles Galaxy",
+    "team_name_abbrev": "LAG",
+    "city": "Los Angeles",
+    "year_founded": 1994,
+    "year_joined": 1996
+  },
+  "sr:competitor:5133": {
+    "team_id": 11,
+    "team_name": "Real Salt Lake",
+    "team_name_abbrev": "RSL",
+    "city": "Salt Lake City",
+    "year_founded": 2004,
+    "year_joined": 2005
+  },
+  "sr:competitor:7080": {
+    "team_id": 12,
+    "team_name": "Toronto FC",
+    "team_name_abbrev": "TOR",
+    "city": "Toronto",
+    "year_founded": 2005,
+    "year_joined": 2007
+  },
+  "sr:competitor:21825": {
+    "team_id": 13,
+    "team_name": "San Jose Earthquakes",
+    "team_name_abbrev": "SJ",
+    "city": "San Jose",
+    "year_founded": 1974,
+    "year_joined": 1996
+  },
+  "sr:competitor:22006": {
+    "team_id": 14,
+    "team_name": "CF Montréal",
+    "team_name_abbrev": "MON",
+    "city": "Montreal",
+    "year_founded": 1992,
+    "year_joined": 2012
+  },
+  "sr:competitor:22007": {
+    "team_id": 15,
+    "team_name": "Portland Timbers",
+    "team_name_abbrev": "POR",
+    "city": "Portland",
+    "year_founded": 1975,
+    "year_joined": 2011
+  },
+  "sr:competitor:22009": {
+    "team_id": 16,
+    "team_name": "Seattle Sounders FC",
+    "team_name_abbrev": "SEA",
+    "city": "Seattle",
+    "year_founded": 1973,
+    "year_joined": 2009
+  },
+  "sr:competitor:22010": {
+    "team_id": 17,
+    "team_name": "Vancouver Whitecaps FC",
+    "team_name_abbrev": "VAN",
+    "city": "Vancouver",
+    "year_founded": 1973,
+    "year_joined": 2011
+  },
+  "sr:competitor:39833": {
+    "team_id": 18,
+    "team_name": "Philadelphia Union",
+    "team_name_abbrev": "PHI",
+    "city": "Chester",
+    "year_founded": 2008,
+    "year_joined": 2010
+  },
+  "sr:competitor:41618": {
+    "team_id": 19,
+    "team_name": "Minnesota United FC",
+    "team_name_abbrev": "MIN",
+    "city": "Saint Paul",
+    "year_founded": 2010,
+    "year_joined": 2017
+  },
+  "sr:competitor:52237": {
+    "team_id": 20,
+    "team_name": "Orlando City SC",
+    "team_name_abbrev": "ORL",
+    "city": "Orlando",
+    "year_founded": 2010,
+    "year_joined": 2015
+  },
+  "sr:competitor:167510": {
+    "team_id": 21,
+    "team_name": "New York City FC",
+    "team_name_abbrev": "NYC",
+    "city": "New York City",
+    "year_founded": 2013,
+    "year_joined": 2015
+  },
+  "sr:competitor:245305": {
+    "team_id": 22,
+    "team_name": "FC Cincinnati",
+    "team_name_abbrev": "CIN",
+    "city": "Cincinnati",
+    "year_founded": 2015,
+    "year_joined": 2019
+  },
+  "sr:competitor:305920": {
+    "team_id": 23,
+    "team_name": "Atlanta United FC",
+    "team_name_abbrev": "ATL",
+    "city": "Atlanta",
+    "year_founded": 2014,
+    "year_joined": 2017
+  },
+  "sr:competitor:402227": {
+    "team_id": 24,
+    "team_name": "Los Angeles FC",
+    "team_name_abbrev": "LAN",
+    "city": "Los Angeles",
+    "year_founded": 2014,
+    "year_joined": 2018
+  },
+  "sr:competitor:659691": {
+    "team_id": 25,
+    "team_name": "Inter Miami CF",
+    "team_name_abbrev": "MIA",
+    "city": "Fort Lauderdale",
+    "year_founded": 2018,
+    "year_joined": 2020
+  },
+  "sr:competitor:668063": {
+    "team_id": 26,
+    "team_name": "Nashville SC",
+    "team_name_abbrev": "NSC",
+    "city": "Nashville",
+    "year_founded": 2016,
+    "year_joined": 2020
+  },
+  "sr:competitor:772256": {
+    "team_id": 27,
+    "team_name": "Austin FC",
+    "team_name_abbrev": "ATX",
+    "city": "Austin",
+    "year_founded": 2018,
+    "year_joined": 2021
+  },
+  "sr:competitor:863473": {
+    "team_id": 28,
+    "team_name": "Charlotte FC",
+    "team_name_abbrev": "CHA",
+    "city": "Charlotte",
+    "year_founded": 2019,
+    "year_joined": 2022
+  },
+  "sr:competitor:874725": {
+    "team_id": 29,
+    "team_name": "St. Louis City SC",
+    "team_name_abbrev": "SAI",
+    "city": "St. Louis",
+    "year_founded": 2019,
+    "year_joined": 2023
+  }
+}
