@@ -1905,7 +1905,9 @@
           "country_code": "BRA",
           "jersey_number": 31,
           "first_name": "Micael",
-          "last_name": ""
+          "last_name": "",
+          "height": 191,
+          "weight": 82
         },
         {
           "id": "sr:player:2188626",
@@ -9975,6 +9977,7 @@
           "type": "forward",
           "date_of_birth": "2004-04-16",
           "jersey_number": 89,
+          "nationality": "United states",
           "first_name": "Cameron",
           "last_name": "Johnson"
         },
@@ -9983,6 +9986,7 @@
           "type": "forward",
           "date_of_birth": "1999-03-07",
           "jersey_number": 45,
+          "nationality": "United states",
           "first_name": "Lucas",
           "last_name": "Meek"
         },

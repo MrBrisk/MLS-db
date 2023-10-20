@@ -125,7 +125,20 @@ matchDataBySeason.forEach(chunk => {
 });
 
 // insert players to teams
-// console.log('Inserting players to teams...');
+console.log('Inserting players to teams...');
+let year = 2021;
+playersByTeamBySeason.forEach((season) => {
+  season.season_competitor_players.forEach(team => {
+    team.players.forEach(async player => {
+      const res = await addPlayerToTeamSeason(
+        playerIdMap[player.id],
+        teamsMap[team.id].team_id,
+        year + ''
+      );
+    });
+  });
+  year++;
+});
 
 // insert team home games
 // console.log('Inserting team home games...');
