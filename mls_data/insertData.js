@@ -131,6 +131,20 @@ async function insertGames(responses) {
             round
           )
         );
+        responses.push(
+          await addHomeTeamGame(
+            home_team_id,
+            gameIdMap[summary.sport_event.id],
+            summary.sport_event.sport_event_context.season.year
+          )
+        );
+        responses.push(
+          await addAwayTeamGame(
+            away_team_id,
+            gameIdMap[summary.sport_event.id],
+            summary.sport_event.sport_event_context.season.year
+          )
+        );
       }
     });
   });
@@ -195,9 +209,3 @@ function insertPlayerGameStats(responses) {
   });
   return responses;
 }
-
-// insert team home games
-// console.log('Inserting team home games...');
-
-// insert team away games
-// console.log('Inserting team away games...');
