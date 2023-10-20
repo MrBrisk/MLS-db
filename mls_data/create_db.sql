@@ -81,3 +81,14 @@ CREATE TABLE Player_Game_Stats (
     FOREIGN KEY (player_id) REFERENCES Player(player_id),
     PRIMARY KEY (game_id, player_id, season)
 );
+
+CREATE TRIGGER update_games_played
+AFTER INSERT ON Player_Game_Stats
+FOR EACH ROW
+BEGIN
+    IF NEW.minutes_played > 0 THEN
+        UPDATE Player_Team_Season
+        SET games_played = games_played + 1
+        WHERE player_id = NEW.player_id AND season = NEW.season;
+    END IF;
+END;

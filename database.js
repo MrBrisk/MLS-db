@@ -52,16 +52,10 @@ export async function addAwayTeamGame(team_id, game_id, season) {
 }
 
 export async function addPlayerToTeamSeason(player_id, team_id, season) {
-  const games_played = await pool.query(`
-  SELECT count(*)
-    FROM player_game_stats
-    WHERE season = ? AND player_id = ? AND minutes_played > 0`, 
-    [season, player_id]
-  );
   return await pool.query(`
   INSERT IGNORE INTO player_team_season (player_id, team_id, season, games_played)
-    VALUES(?, ?, ?)`,
-    [player_id, team_id, season, games_played]
+    VALUES(?, ?, ?, 0)`,
+    [player_id, team_id, season]
   );
 }
 
