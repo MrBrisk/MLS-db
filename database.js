@@ -66,3 +66,22 @@ export async function addPlayerGameStats(player_id, game_id, season, goals, assi
     [player_id, game_id, season, goals, assists, saves, shots_faced, goals_conceded, shots_on_goal, minutes_played, yellow_cards, red_cards]
   );
 }
+
+export async function getPlayers() {
+  return await pool.query(`
+  SELECT *
+    FROM player`
+  );
+}
+
+export async function getTeams() {
+  return await pool.query(`
+  SELECT *
+    FROM team`);
+}
+
+export async function getGames() {
+  return await pool.query(`
+  SELECT *
+    FROM game`);
+}

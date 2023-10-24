@@ -1,18 +1,143 @@
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   background-color: #0d1117;
   color: lightgray;
   margin: auto;
 }
 
+:root {
+  color-scheme: dark;
+}
+
 header {
   background-color: #010409;
   box-shadow: 0 0.5px 0px 0px #30363d;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .header-logo {
   color: #334769;
   font-size: 30px;
   padding: 5px;
+}
+
+#outputSelectItems ul {
+  margin: 0;
+  list-style-type: none;
+  text-align: center;
+  padding: 20px;
+  border: solid #30363d 1px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 70%;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+#outputSelectItems ul li {
+  float: left;
+  padding: 10px;
+  line-height: 0px;
+  cursor: pointer;
+}
+
+#flexContainer {
+  display: flex;
+  max-width: 100%;
+}
+
+#queryButtons {
+  padding: 40px;
+}
+
+.table-action-btn {
+  border: solid #30363d 1px;
+  border-radius: 1px;
+  background-color: #010409;
+  color: lightgray;
+  font-family: "Courier New", Courier, monospace;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#currentTab {
+  background-color: purple;
+  cursor: default !important;
+}
+
+#loading::after {
+  display: inline-block;
+  animation: dotty steps(1, end) 1s infinite;
+  content: "";
+}
+
+#loading {
+  margin-top: 10%;
+  text-align: center;
+  width: 70%;
+}
+
+@keyframes dotty {
+  0% {
+    content: "...";
+  }
+  25% {
+    content: "..";
+  }
+  50% {
+    content: ".";
+  }
+  75% {
+    content: "..";
+  }
+  100% {
+    content: "...";
+  }
+}
+
+#tableContainer {
+  max-width: 80%;
+  margin: 0;
+  border: #30363d 1px solid;
+  border-radius: 3px;
+  padding: 5px;
+  font-size: 14px;
+  min-width: 80%;
+}
+
+.dataTable {
+  font-size: 16px;
+}
+
+#outputTable tbody tr.odd {
+  background-color: #0b0e12;
+}
+
+#outputTable tbody tr.even {
+  background-color: #0d1117;
+}
+
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #484748 #0d1117;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #484748;
+  border-radius: 10px;
+  border: 3px solid #0d1117;
+}
+
+::-webkit-scrollbar-corner { 
+  background: #0d1117;
 }
