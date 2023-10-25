@@ -2,6 +2,8 @@ let selectedTab = 'Teams';
 let outputTable;
 const loader = $('#loading');
 const tableContainer = $('#tableContainer');
+const addBtn = $('#addBtn');
+const deleteBtn = $('#deleteBtn');
 
 $(function () {
   tableContainer.attr('hidden', true);
@@ -26,15 +28,33 @@ function changeTab(tab) {
   selectedTab = tab;
   switch (tab) {
     case "Teams":
+      addBtn.html('Add Team');
+      addBtn.attr('hidden', false);
+      deleteBtn.html('Delete Team');
+      deleteBtn.attr('hidden', true);
+      $('.query-btn').attr('hidden', true);
       getTeams();
       break;
     case "Players":
+      addBtn.html('Add Player');
+      addBtn.attr('hidden', false);
+      deleteBtn.html('Delete Player');
+      deleteBtn.attr('hidden', true);
+      $('.query-btn').attr('hidden', true);
       getPlayers();
       break;
     case "Games":
+      addBtn.html('Add Game');
+      addBtn.attr('hidden', false);
+      deleteBtn.html('Delete Game');
+      deleteBtn.attr('hidden', true);
+      $('.query-btn').attr('hidden', true);
       getGames();
       break;
     case "Advanced Queries":
+      addBtn.attr('hidden', true);
+      deleteBtn.attr('hidden', true);
+      $('.query-btn').attr('hidden', false);
       const data = [{'id': ''}]
       createDataTable(data);
       break;
@@ -100,7 +120,7 @@ function createDataTable(data) {
     data: data,
     bAutoWidth: false,
     scrollX: true,
-    scrollY: 300,
+    scrollY: '53vh',
     deferRender: true,
     scroller: true
   });

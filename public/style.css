@@ -48,6 +48,8 @@ header {
 
 #queryButtons {
   padding: 40px;
+  display: flex;
+  flex-direction: column;
 }
 
 .table-action-btn {
@@ -58,6 +60,7 @@ header {
   font-family: "Courier New", Courier, monospace;
   padding: 10px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 #currentTab {
