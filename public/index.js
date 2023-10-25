@@ -3,20 +3,20 @@ let outputTable;
 const loader = $('#loading');
 const tableContainer = $('#tableContainer');
 const addBtn = $('#addBtn');
-const deleteBtn = $('#deleteBtn');
+const editBtn = $('#editBtn');
+let selectedRow;
 
 $(function () {
   tableContainer.attr('hidden', true);
   getTeams();
 });
 
-$('#outputSelectItems ul li').on('click', function(event) {
-  if (event.target.id == 'currentTab')
-    return;
-  const oldSelection = $("#currentTab")[0];
+$('#outputSelectItems ul li').on('click', function (event) {
+  if (event.target.id == 'currentTab') return;
+  const oldSelection = $('#currentTab')[0];
   oldSelection.id = '';
-  event.target.id = "currentTab";
-  tableContainer.attr("hidden", true);
+  event.target.id = 'currentTab';
+  tableContainer.attr('hidden', true);
   loader.attr('hidden', false);
   outputTable.destroy();
   $('#outputTable tbody').empty();
@@ -27,35 +27,35 @@ $('#outputSelectItems ul li').on('click', function(event) {
 function changeTab(tab) {
   selectedTab = tab;
   switch (tab) {
-    case "Teams":
+    case 'Teams':
       addBtn.html('Add Team');
       addBtn.attr('hidden', false);
-      deleteBtn.html('Delete Team');
-      deleteBtn.attr('hidden', true);
+      editBtn.html('Edit Team');
+      editBtn.attr('hidden', true);
       $('.query-btn').attr('hidden', true);
       getTeams();
       break;
-    case "Players":
+    case 'Players':
       addBtn.html('Add Player');
       addBtn.attr('hidden', false);
-      deleteBtn.html('Delete Player');
-      deleteBtn.attr('hidden', true);
+      editBtn.html('Edit Player');
+      editBtn.attr('hidden', true);
       $('.query-btn').attr('hidden', true);
       getPlayers();
       break;
-    case "Games":
+    case 'Games':
       addBtn.html('Add Game');
       addBtn.attr('hidden', false);
-      deleteBtn.html('Delete Game');
-      deleteBtn.attr('hidden', true);
+      editBtn.html('Edit Game');
+      editBtn.attr('hidden', true);
       $('.query-btn').attr('hidden', true);
       getGames();
       break;
-    case "Advanced Queries":
+    case 'Advanced Queries':
       addBtn.attr('hidden', true);
-      deleteBtn.attr('hidden', true);
+      editBtn.attr('hidden', true);
       $('.query-btn').attr('hidden', false);
-      const data = [{'id': ''}]
+      const data = [{ id: '' }];
       createDataTable(data);
       break;
     default:
@@ -65,43 +65,43 @@ function changeTab(tab) {
 
 function getPlayers() {
   $.ajax({
-    url: "/getPlayers",
-    type: "GET",
-    dataType: "json",
+    url: '/getPlayers',
+    type: 'GET',
+    dataType: 'json',
     success: (response) => {
       createDataTable(response[0]);
     },
     failure: (response) => {
       console.log(response);
-    }
+    },
   });
 }
 
 function getGames() {
   $.ajax({
-    url: "/getGames",
-    type: "GET",
-    dataType: "json",
+    url: '/getGames',
+    type: 'GET',
+    dataType: 'json',
     success: (response) => {
       createDataTable(response[0]);
     },
     failure: (response) => {
       console.log(response);
-    }
+    },
   });
 }
 
 function getTeams() {
   $.ajax({
-    url: "/getTeams",
-    type: "GET",
-    dataType: "json",
+    url: '/getTeams',
+    type: 'GET',
+    dataType: 'json',
     success: (response) => {
       createDataTable(response[0]);
     },
     failure: (response) => {
       console.log(response);
-    }
+    },
   });
 }
 
@@ -111,18 +111,31 @@ function createDataTable(data) {
   for (let i in columnNames) {
     columns.push({
       data: columnNames[i],
-      title: columnNames[i]
+      title: columnNames[i],
     });
   }
-  tableContainer.attr("hidden", false);
-  outputTable = new DataTable("#outputTable", {
+  tableContainer.attr('hidden', false);
+  outputTable = new DataTable('#outputTable', {
     columns: columns,
     data: data,
     bAutoWidth: false,
     scrollX: true,
     scrollY: '53vh',
     deferRender: true,
-    scroller: true
+    scroller: true,
+    select: {
+      style: 'single',
+    },
   });
   loader.attr('hidden', true);
+
+  outputTable
+    .on('select', function (e, dt, type, index) {
+      selectedRow = outputTable.rows(index).data()[0];
+      editBtn.attr('hidden', false);
+    })
+    .on('deselect', function () {
+      editBtn.attr('hidden', true);
+      selectedRow = null;
+    });
 }
