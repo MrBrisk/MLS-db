@@ -106,6 +106,7 @@ function getTeams() {
 }
 
 function createDataTable(data) {
+  const selectOptions = selectedTab == 'Advanced Queries' ? false : {style: 'single'};
   let columns = [];
   let columnNames = Object.keys(data[0]);
   for (let i in columnNames) {
@@ -123,9 +124,7 @@ function createDataTable(data) {
     scrollY: '53vh',
     deferRender: true,
     scroller: true,
-    select: {
-      style: 'single',
-    },
+    select: selectOptions,
   });
   loader.attr('hidden', true);
 
