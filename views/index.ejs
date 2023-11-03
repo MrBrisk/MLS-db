@@ -19,6 +19,8 @@
     ></script>
     <link href='/datatables.min.css' rel='stylesheet'/>
     <script src='/datatables.min.js'></script>
+    <link href='/tingle.css' rel='stylesheet' />
+    <script src='/tingle.js'></script>
   </head>
   <body>
     <header>
@@ -26,10 +28,10 @@
     </header>
     <div id='outputSelectItems'>
       <ul>
-        <li id='currentTab'>Teams</li>
-        <li>Players</li>
-        <li>Games</li>
-        <li>Advanced Queries</li>
+        <li id='currentTab' data-value='Team'>Teams</li>
+        <li data-value='Player'>Players</li>
+        <li data-value='Game'>Games</li>
+        <li data-value='Advanced Queries'>Advanced Queries</li>
       </ul>
     </div>
     <div id='flexContainer'>

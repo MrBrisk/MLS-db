@@ -1,11 +1,21 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
-import { getPlayers, getTeams, getGames } from './database.js';
+import { getPlayers, getTeams, getGames, addTeam, addPlayer, addGame } from './database.js';
 
 const app = express();
 const PORT = 8080;
 
 app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong.');
+});
 
 app.get('/', (req, res) => {
   res.render('index.ejs');
@@ -26,11 +36,44 @@ app.get("/getGames", async (req, res) => {
   res.send(games);
 });
 
-app.use(express.static('public'));
+app.post('/addTeam', async (req, res) => {
+  const result = await addTeam(
+    null,
+    req.body['team_name'],
+    req.body['team_name_abbrev'],
+    parseInt(req.body['year_founded']),
+    parseInt(req.body['year_joined']),
+    req.body['city']
+  );
+  res.send(result);
+});
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong.');
+app.post('/addPlayer', async (req, res) => {
+  const result = await addPlayer(
+    null,
+    req.body['first_name'],
+    req.body['last_name'],
+    req.body['date_of_birth'],
+    req.body['nationality'],
+    parseInt(req.body['height_cm']),
+    parseInt(req.body['weight_kg']),
+    parseInt(req.body['jersey_number']),
+    req.body['position']
+  );
+  res.send(result);
+});
+
+app.post('/addGame', async (req, res) => {
+  const result = await addGame(
+    null,
+    parseInt(req.body['home_team_score']),
+    parseInt(req.body['away_team_score']),
+    parseInt(req.body['home_team_id']),
+    parseInt(req.body['away_team_id']),
+    req.body['game_type'],
+    req.body['round']
+  );
+  res.send(result);
 });
 
 app.listen(PORT, () => {

@@ -11,28 +11,52 @@ const pool = mysql.createPool({
   database: process.env.MYSQL_DATABASE
 }).promise();
 
-export async function addTeam(team_id, team_name, team_name_abbrev, year_founded, year_joined, city) {
-  return await pool.query(`
-  INSERT IGNORE INTO team (team_id, team_name, team_name_abbrev, year_founded, year_joined, city)
-    VALUES(?, ?, ?, ?, ?, ?)`,
-    [team_id, team_name, team_name_abbrev, year_founded, year_joined, city]
-  );
+export async function addTeam(team_id=null, team_name, team_name_abbrev, year_founded, year_joined, city) {
+  if (team_id == null) {
+    return await pool.query(`
+    INSERT INTO team (team_name, team_name_abbrev, year_founded, year_joined, city)
+      VALUES(?, ?, ?, ?, ?)`,
+      [team_name, team_name_abbrev, year_founded, year_joined, city]
+    );
+  } else {
+    return await pool.query(`
+    INSERT IGNORE INTO team (team_id, team_name, team_name_abbrev, year_founded, year_joined, city)
+      VALUES(?, ?, ?, ?, ?, ?)`,
+      [team_id, team_name, team_name_abbrev, year_founded, year_joined, city]
+    );
+  }
 }
 
-export async function addPlayer(player_id, first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position) {
-  return await pool.query(`
-  INSERT IGNORE INTO player (player_id, first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position)
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [player_id, first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position]
-  );
+export async function addPlayer(player_id=null, first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position) {
+  if (player_id = null) {
+    return await pool.query(`
+    INSERT INTO player (first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position)
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+      [first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position]
+    );
+  } else {
+    return await pool.query(`
+    INSERT IGNORE INTO player (player_id, first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position)
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [player_id, first_name, last_name, date_of_birth, nationality, height_cm, weight_kg, jersey_number, position]
+    );
+  }
 }
 
-export async function addGame(game_id, date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round) {
-  return await pool.query(`
-  INSERT IGNORE INTO game (game_id, date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round)
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
-    [game_id, date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round]
-  );
+export async function addGame(game_id=null, date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round) {
+  if (game_id == null) {
+    return await pool.query(`
+    INSERT INTO game (date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round)
+      VALUES(?, ?, ?, ?, ?, ?, ?)`,
+      [date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round]
+    );
+  } else {
+    return await pool.query(`
+    INSERT IGNORE INTO game (game_id, date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round)
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+      [game_id, date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round]
+    );
+  }
 }
 
 export async function addHomeTeamGame(team_id, game_id, season) {

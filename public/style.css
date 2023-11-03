@@ -65,7 +65,7 @@ header {
 }
 
 #currentTab {
-  background-color: purple;
+  background-color: #334769;
   cursor: default !important;
 }
 
@@ -144,4 +144,37 @@ header {
 
 ::-webkit-scrollbar-corner { 
   background: #0d1117;
+}
+
+#modalForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.modalInput {
+  height: 25px;
+}
+
+#modalX {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 36px;
+  line-height: 1;
+  margin-right: 5px;
+  color: #484748;
+}
+
+#modalTitle {
+  margin-top: 3px;
+  margin-left: 10px;
+}
+
+.modalInputs {
+  padding: 10px;
+}
+
+#input0 input {
+  cursor: not-allowed;
+  opacity: 50%;
 }
