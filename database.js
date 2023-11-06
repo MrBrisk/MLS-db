@@ -101,11 +101,70 @@ export async function getPlayers() {
 export async function getTeams() {
   return await pool.query(`
   SELECT *
-    FROM team`);
+    FROM team`
+  );
 }
 
 export async function getGames() {
   return await pool.query(`
   SELECT *
-    FROM game`);
+    FROM game`
+  );
+}
+
+export async function editTeam(data) {
+  let query = 'UPDATE team\nSET ';
+  for (const [key, value] of Object.entries(data)) {
+    if (key != 'team_id') {
+      query += `${key}='${value}', `;
+    }
+  }
+  query = query.slice(0, -2);
+  query += `\nWHERE team_id = ${data['team_id']};`;
+  return await pool.query(query);
+}
+
+export async function deleteTeam(team_id) {
+  return await pool.query(`
+  DELETE FROM team
+    WHERE team_id = ${team_id}`
+  );
+}
+
+export async function editPlayer(data) {
+  let query = 'UPDATE player\nSET ';
+  for (const [key, value] of Object.entries(data)) {
+    if (key != 'player_id') {
+      query += `${key}='${value}', `;
+    }
+  }
+  query = query.slice(0, -2);
+  query += `\nWHERE player_id = ${data['player_id']};`;
+  return await pool.query(query);
+}
+
+export async function deletePlayer(player_id) {
+  return await pool.query(`
+  DELETE FROM player
+    WHERE player_id = ${player_id}`
+  );
+}
+
+export async function editGame(data) {
+  let query = 'UPDATE game\nSET ';
+  for (const [key, value] of Object.entries(data)) {
+    if (key != 'game_id') {
+      query += `${key}='${value}', `;
+    }
+  }
+  query = query.slice(0, -2);
+  query += `\nWHERE game_id = ${data['game_id']};`;
+  return await pool.query(query);
+}
+
+export async function deleteGame(game_id) {
+  return await pool.query(`
+  DELETE FROM game
+    WHERE game_id = ${game_id}`
+  );
 }

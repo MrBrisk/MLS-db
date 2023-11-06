@@ -1,7 +1,20 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { getPlayers, getTeams, getGames, addTeam, addPlayer, addGame } from './database.js';
+import {
+  getPlayers,
+  getTeams,
+  getGames,
+  addTeam,
+  addPlayer,
+  addGame,
+  editTeam,
+  editPlayer,
+  editGame,
+  deleteTeam,
+  deletePlayer,
+  deleteGame,
+} from './database.js';
 
 const app = express();
 const PORT = 8080;
@@ -26,12 +39,12 @@ app.get('/getPlayers', async (req, res) => {
   res.send(players);
 });
 
-app.get("/getTeams", async (req, res) => {
+app.get('/getTeams', async (req, res) => {
   const teams = await getTeams();
   res.send(teams);
 });
 
-app.get("/getGames", async (req, res) => {
+app.get('/getGames', async (req, res) => {
   const games = await getGames();
   res.send(games);
 });
@@ -66,6 +79,7 @@ app.post('/addPlayer', async (req, res) => {
 app.post('/addGame', async (req, res) => {
   const result = await addGame(
     null,
+    req.body['date_played'],
     parseInt(req.body['home_team_score']),
     parseInt(req.body['away_team_score']),
     parseInt(req.body['home_team_id']),
@@ -73,6 +87,36 @@ app.post('/addGame', async (req, res) => {
     req.body['game_type'],
     req.body['round']
   );
+  res.send(result);
+});
+
+app.post('/editTeam', async (req, res) => {
+  const result = await editTeam(req.body);
+  res.send(result);
+});
+
+app.post('/editPlayer', async (req, res) => {
+  const result = await editPlayer(req.body);
+  res.send(result);
+});
+
+app.post('/editGame', async (req, res) => {
+  const result = await editGame(req.body);
+  res.send(result);
+});
+
+app.post('/deleteTeam', async (req, res) => {
+  const result = await deleteTeam(req.body['team_id']);
+  res.send(result);
+});
+
+app.post('/deletePlayer', async (req, res) => {
+  const result = await deletePlayer(req.body['player_id']);
+  res.send(result);
+});
+
+app.post('/deleteGame', async (req, res) => {
+  const result = await deleteGame(req.body['game_id']);
   res.send(result);
 });
 

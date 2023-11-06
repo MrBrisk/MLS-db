@@ -31,16 +31,16 @@ CREATE TABLE Game (
     away_team_id INTEGER NOT NULL,
     game_type ENUM('regular season', 'playoffs') NOT NULL,
     round VARCHAR(30),
-    FOREIGN KEY (home_team_id) REFERENCES Team(team_id),
-    FOREIGN KEY (away_team_id) REFERENCES Team(team_id)
+    FOREIGN KEY (home_team_id) REFERENCES Team(team_id) ON DELETE CASCADE,
+    FOREIGN KEY (away_team_id) REFERENCES Team(team_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Home_Team_Game (
     team_id INTEGER NOT NULL,
     game_id INTEGER NOT NULL,
     season YEAR NOT NULL,
-    FOREIGN KEY (team_id) REFERENCES Team(team_id),
-    FOREIGN KEY (game_id) REFERENCES Game(game_id),
+    FOREIGN KEY (team_id) REFERENCES Team(team_id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
     PRIMARY KEY (team_id, game_id, season)
 );
 
@@ -48,8 +48,8 @@ CREATE TABLE Away_Team_Game (
     team_id INTEGER NOT NULL,
     game_id INTEGER NOT NULL,
     season YEAR NOT NULL,
-    FOREIGN KEY (team_id) REFERENCES Team(team_id),
-    FOREIGN KEY (game_id) REFERENCES Game(game_id),
+    FOREIGN KEY (team_id) REFERENCES Team(team_id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
     PRIMARY KEY (team_id, game_id, season)
 );
 
@@ -58,8 +58,8 @@ CREATE TABLE Player_Team_Season (
     team_id INTEGER NOT NULL,
     season YEAR NOT NULL,
     games_played SMALLINT DEFAULT 0,
-    FOREIGN KEY (team_id) REFERENCES Team(team_id),
-    FOREIGN KEY (player_id) REFERENCES Player(player_id),
+    FOREIGN KEY (team_id) REFERENCES Team(team_id) ON DELETE CASCADE,
+    FOREIGN KEY (player_id) REFERENCES Player(player_id) ON DELETE CASCADE,
     PRIMARY KEY (team_id, player_id, season)
 );
 
@@ -77,8 +77,8 @@ CREATE TABLE Player_Game_Stats (
     minutes_played SMALLINT DEFAULT 0,
     yellow_cards SMALLINT DEFAULT 0,
     red_cards SMALLINT DEFAULT 0,
-    FOREIGN KEY (game_id) REFERENCES Game(game_id),
-    FOREIGN KEY (player_id) REFERENCES Player(player_id),
+    FOREIGN KEY (game_id) REFERENCES Game(game_id) ON DELETE CASCADE,
+    FOREIGN KEY (player_id) REFERENCES Player(player_id) ON DELETE CASCADE,
     PRIMARY KEY (game_id, player_id, season)
 );
 
@@ -90,5 +90,16 @@ BEGIN
         UPDATE Player_Team_Season
         SET games_played = games_played + 1
         WHERE player_id = NEW.player_id AND season = NEW.season;
+    END IF;
+END;
+
+CREATE TRIGGER decrement_games_played
+AFTER DELETE ON Player_Game_Stats
+FOR EACH ROW
+BEGIN
+    IF OLD.minutes_played > 0 THEN
+        UPDATE Player_Team_Season
+        SET games_played = games_played - 1
+        WHERE team_id = OLD.player_id AND season = OLD.season;
     END IF;
 END;

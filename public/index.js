@@ -87,7 +87,7 @@ editBtn.on('click', function (event) {
     modalContent +=
       `<div class='modalInputItem' id='input${i}'>` +
         `<label for='${key}'>${key} </label>` +
-        `<input id='${key}' class='modalInput' value='${value}'><br></br>` +
+        `<input id='${key}' name='${key}' class='modalInput' value='${value}'><br></br>` +
       '</div>\n';
     i++;
   }
@@ -95,10 +95,49 @@ editBtn.on('click', function (event) {
   modal.setContent(modalContent);
   modal.setFooterContent('');
   modal.addFooterBtn(`Update ${selectedTab}`, 'tingle-btn tingle-btn--primary tingle-btn--pull-right', function () {
-    alert('click on primary button!');
+    $('button.submit').attr('disabled', 'true');
+    $('button.submit')
+      .removeClass('tingle-btn--primary')
+      .addClass('tingle-btn--primary-clicked');
+    let data = {};
+    $.each($('#modalForm').serializeArray(), function (_, kv) {
+      data[kv.name] = kv.value;
+    });
+    $.ajax({
+      url: `/edit${selectedTab}`,
+      type: 'POST',
+      data: data,
+      success: () => {
+        modal.close();
+        changeTab(selectedTab);
+      },
+      failure: (response) => {
+        console.log(response);
+        modal.close();
+      },
+    });
   });
   modal.addFooterBtn(`Delete ${selectedTab}`, 'tingle-btn tingle-btn--danger', function () {
-
+    $('button.tingle-btn--danger').attr('disabled', 'true');
+    $('button.tingle-btn--danger')
+      .removeClass('tingle-btn--danger')
+      .addClass('tingle-btn--danger-clicked');
+    const idInput = $('#input0 input')[0];
+    let data = {};
+    data[idInput.id] = idInput.value;
+    $.ajax({
+      url: `/delete${selectedTab}`,
+      type: 'POST',
+      data: data,
+      success: () => {
+        modal.close();
+        changeTab(selectedTab);
+      },
+      failure: (response) => {
+        console.log(response);
+        modal.close();
+      },
+    });
   });
   $('#input0').attr('disabled', 'true');
   modal.open();
