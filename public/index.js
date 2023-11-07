@@ -19,7 +19,7 @@ let modal = new tingle.modal({
 
 $(function () {
   tableContainer.attr('hidden', true);
-  getTeams();
+  getEntity();
 });
 
 addBtn.on('click', function () {
@@ -180,59 +180,21 @@ function changeTab(tab) {
   addBtn.attr('hidden', false);
   editBtn.attr('hidden', true);
   $('.query-btn').attr('hidden', true);
-  switch (tab) {
-    case 'Team':
-      getTeams();
-      break;
-    case 'Player':
-      getPlayers();
-      break;
-    case 'Game':
-      getGames();
-      break;
-    case 'Advanced Queries':
-      addBtn.attr('hidden', true);
-      editBtn.attr('hidden', true);
-      $('.query-btn').attr('hidden', false);
-      const data = [{ id: '' }];
-      createDataTable(data);
-      break;
-    default:
-      break;
+  
+  if (tab == 'Advanced Queries') {
+    addBtn.attr('hidden', true);
+    editBtn.attr('hidden', true);
+    $('.query-btn').attr('hidden', false);
+    const data = [{ id: '' }];
+    createDataTable(data);
+  } else {
+    getEntity();
   }
 }
 
-function getPlayers() {
+function getEntity() {
   $.ajax({
-    url: '/getPlayers',
-    type: 'GET',
-    dataType: 'json',
-    success: (response) => {
-      createDataTable(response[0]);
-    },
-    failure: (response) => {
-      console.log(response);
-    },
-  });
-}
-
-function getGames() {
-  $.ajax({
-    url: '/getGames',
-    type: 'GET',
-    dataType: 'json',
-    success: (response) => {
-      createDataTable(response[0]);
-    },
-    failure: (response) => {
-      console.log(response);
-    },
-  });
-}
-
-function getTeams() {
-  $.ajax({
-    url: '/getTeams',
+    url: `/get${selectedTab}s`,
     type: 'GET',
     dataType: 'json',
     success: (response) => {
