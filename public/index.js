@@ -22,7 +22,7 @@ $(function () {
   getEntity();
 });
 
-addBtn.on('click', function () {
+addBtn.on('click', async function () {
   let outputColumns = [];
   outputTable.columns().header().each(function (col) {
     outputColumns.push(col.innerText);
@@ -35,21 +35,25 @@ addBtn.on('click', function () {
     "<hr style='border-color: #242323; width: 98%'>" + 
     "<div class='modalInputs'>" +
       "<form id='modalForm'>";
-  let i = 0;
-  outputColumns.forEach(col => {
-    let type = 'text';
-    if (col.includes('date')) {
-      type = 'date';
-    } else if (col.includes('color')) {
-      type = 'color';
+  for (let i in outputColumns) {
+    let col = outputColumns[i];
+    if (i != 0 && col.includes('_id')) {
+      modalContent += await getIdDropdown(col, '', i);
+    } else {
+      let type = 'text';
+      if (col.includes('date')) {
+        type = 'date';
+      } else if (col.includes('color')) {
+        type = 'color';
+      }
+      modalContent +=
+        `<div class='modalInputItem' id='input${i}'>` +
+        `<label for='${col}'>${col} </label>` +
+        `<input id='${col}' name='${col}' type='${type}' class='modalInput'><br></br>` +
+        '</div>\n';
     }
-    modalContent += 
-    `<div class='modalInputItem' id='input${i}'>` +
-      `<label for='${col}'>${col} </label>` +
-      `<input id='${col}' name='${col}' type='${type}' class='modalInput'><br></br>` +
-    "</div>\n";
     i++;
-  });
+  }
   modalContent += "</form>\n</div>";
   modal.setContent(modalContent);
   modal.setFooterContent('');
@@ -79,7 +83,7 @@ addBtn.on('click', function () {
   modal.open();
 });
 
-editBtn.on('click', async function (event) {
+editBtn.on('click', async function () {
   let modalContent =
     "<div style='display: flex'>" +
       `<h3 id='modalTitle'>Edit ${selectedTab}</h3>` +
