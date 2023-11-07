@@ -74,7 +74,9 @@ app.post('/addTeam', async (req, res) => {
     req.body['team_name_abbrev'],
     parseInt(req.body['year_founded']),
     parseInt(req.body['year_joined']),
-    req.body['city']
+    req.body['city'],
+    req.body['primary_color'],
+    req.body['secondary_color']
   );
   res.send(result);
 });

@@ -261,7 +261,7 @@ async function getIdDropdown(key, value, i) {
   let select =
     `<div class='modalInputItem' id='input${i}'>\n` +
     `<label for='${key}'>${key} </label>\n` +
-    `<select class='modalInput'>\n`;
+    `<select class='modalInput' name=${key}>\n`;
   for (const i in res[0]) {
     const id = Object.values(res[0][i])[0];
     const selected = value == id ? 'selected' : '';
