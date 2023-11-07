@@ -62,7 +62,9 @@ async function insertTeams(responses) {
         team.team_name_abbrev,
         team.year_founded,
         team.year_joined,
-        team.city
+        team.city,
+        team.primary_color,
+        team.secondary_color
       )
     );
   }

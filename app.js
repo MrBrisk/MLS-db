@@ -5,6 +5,9 @@ import {
   getPlayers,
   getTeams,
   getGames,
+  getPlayerIds,
+  getTeamIds,
+  getGameIds,
   addTeam,
   addPlayer,
   addGame,
@@ -46,6 +49,21 @@ app.get('/getTeams', async (req, res) => {
 
 app.get('/getGames', async (req, res) => {
   const games = await getGames();
+  res.send(games);
+});
+
+app.get('/getPlayerIds', async (req, res) => {
+  const players = await getPlayerIds();
+  res.send(players);
+});
+
+app.get('/getTeamIds', async (req, res) => {
+  const teams = await getTeamIds();
+  res.send(teams);
+});
+
+app.get('/getGameIds', async (req, res) => {
+  const games = await getGameIds();
   res.send(games);
 });
 

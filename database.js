@@ -11,18 +11,18 @@ const pool = mysql.createPool({
   database: process.env.MYSQL_DATABASE
 }).promise();
 
-export async function addTeam(team_id=null, team_name, team_name_abbrev, year_founded, year_joined, city) {
+export async function addTeam(team_id=null, team_name, team_name_abbrev, year_founded, year_joined, city, primary_color, secondary_color) {
   if (team_id == null) {
     return await pool.query(`
-    INSERT INTO team (team_name, team_name_abbrev, year_founded, year_joined, city)
-      VALUES(?, ?, ?, ?, ?)`,
-      [team_name, team_name_abbrev, year_founded, year_joined, city]
+    INSERT INTO team (team_name, team_name_abbrev, year_founded, year_joined, city, primary_color, secondary_color)
+      VALUES(?, ?, ?, ?, ?, ?, ?)`,
+      [team_name, team_name_abbrev, year_founded, year_joined, city, primary_color, secondary_color]
     );
   } else {
     return await pool.query(`
-    INSERT IGNORE INTO team (team_id, team_name, team_name_abbrev, year_founded, year_joined, city)
-      VALUES(?, ?, ?, ?, ?, ?)`,
-      [team_id, team_name, team_name_abbrev, year_founded, year_joined, city]
+    INSERT IGNORE INTO team (team_id, team_name, team_name_abbrev, year_founded, year_joined, city, primary_color, secondary_color)
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+      [team_id, team_name, team_name_abbrev, year_founded, year_joined, city, primary_color, secondary_color]
     );
   }
 }
@@ -108,6 +108,27 @@ export async function getTeams() {
 export async function getGames() {
   return await pool.query(`
   SELECT *
+    FROM game`
+  );
+}
+
+export async function getPlayerIds() {
+  return await pool.query(`
+  SELECT player_id
+    FROM player`
+  );
+}
+
+export async function getTeamIds() {
+  return await pool.query(`
+  SELECT team_id
+    FROM team`
+  );
+}
+
+export async function getGameIds() {
+  return await pool.query(`
+  SELECT game_id
     FROM game`
   );
 }

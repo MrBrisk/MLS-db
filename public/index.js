@@ -37,10 +37,16 @@ addBtn.on('click', function () {
       "<form id='modalForm'>";
   let i = 0;
   outputColumns.forEach(col => {
+    let type = 'text';
+    if (col.includes('date')) {
+      type = 'date';
+    } else if (col.includes('color')) {
+      type = 'color';
+    }
     modalContent += 
     `<div class='modalInputItem' id='input${i}'>` +
       `<label for='${col}'>${col} </label>` +
-      `<input id='${col}' name='${col}' class='modalInput'><br></br>` +
+      `<input id='${col}' name='${col}' type='${type}' class='modalInput'><br></br>` +
     "</div>\n";
     i++;
   });
@@ -73,7 +79,7 @@ addBtn.on('click', function () {
   modal.open();
 });
 
-editBtn.on('click', function (event) {
+editBtn.on('click', async function (event) {
   let modalContent =
     "<div style='display: flex'>" +
       `<h3 id='modalTitle'>Edit ${selectedTab}</h3>` +
@@ -81,14 +87,25 @@ editBtn.on('click', function (event) {
     "</div>" +
     "<hr style='border-color: #242323; width: 98%'>" + 
     "<div class='modalInputs'>" +
-      "<form id='modalForm'>";
+      "<form id='modalForm'>\n";
   let i = 0;
-  for (const [key, value] of Object.entries(selectedRow)) {
-    modalContent +=
-      `<div class='modalInputItem' id='input${i}'>` +
-        `<label for='${key}'>${key} </label>` +
-        `<input id='${key}' name='${key}' class='modalInput' value='${value}'><br></br>` +
-      '</div>\n';
+  for (let [key, value] of Object.entries(selectedRow)) {
+    if (i != 0 && key.includes('_id')) {
+      modalContent += await getIdDropdown(key, value, i);
+    } else {
+      let type = 'text';
+      if (key.includes('date')) {
+        type = 'date';
+        value = value.split('T')[0];
+      } else if (key.includes('color')) {
+        type = 'color';
+      }
+      modalContent +=
+        `<div class='modalInputItem' id='input${i}'>` +
+          `<label for='${key}'>${key} </label>` +
+          `<input id='${key}' name='${key}' type='${type}' class='modalInput' value='${value}'><br></br>` +
+        '</div>\n';
+    }
     i++;
   }
   modalContent += "</form>\n</div>";
@@ -259,4 +276,31 @@ function createDataTable(data) {
       editBtn.attr('hidden', true);
       selectedRow = null;
     });
+}
+
+async function getIdDropdown(key, value, i) {
+  let type = null;
+  if (key.includes('team_id')) {
+    type = 'Team';
+  } else if (key.includes('player_id')) {
+    type = 'Player';
+  } else if (key.includes('game_id')) {
+    type = 'Game';
+  }
+  const res = await $.ajax({
+    url: `/get${type}Ids`,
+    type: 'GET',
+    dataType: 'json',
+  });
+  let select =
+    `<div class='modalInputItem' id='input${i}'>\n` +
+    `<label for='${key}'>${key} </label>\n` +
+    `<select class='modalInput'>\n`;
+  for (const i in res[0]) {
+    const id = Object.values(res[0][i])[0];
+    const selected = value == id ? 'selected' : '';
+    select += `<option ${selected} value='${id}'>${id}</option>\n`;
+  }
+  select += '</select><br></br>' + '</div>\n';
+  return select;
 }

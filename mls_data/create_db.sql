@@ -7,7 +7,9 @@ CREATE TABLE Team (
     team_name_abbrev VARCHAR(10) NOT NULL,
     year_founded YEAR NOT NULL,
     year_joined YEAR NOT NULL,
-    city VARCHAR(50) NOT NULL
+    city VARCHAR(50) NOT NULL,
+    primary_color VARCHAR(8),
+    secondary_color VARCHAR(8)
 );
 
 CREATE TABLE Player (

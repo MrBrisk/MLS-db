@@ -5,7 +5,9 @@
     "team_name_abbrev": "DC",
     "city": "Washington, D.C.",
     "year_founded": 1994,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#ee1a39",
+    "secondary_color": "#231f20"
   },
   "sr:competitor:2504": {
     "team_id": 2,
@@ -13,7 +15,9 @@
     "team_name_abbrev": "CLB",
     "city": "Columbus",
     "year_founded": 1994,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#231f20",
+    "secondary_color": "#FEF200"
   },
   "sr:competitor:2505": {
     "team_id": 3,
@@ -21,7 +25,9 @@
     "team_name_abbrev": "CHI",
     "city": "Chicago",
     "year_founded": 1997,
-    "year_joined": 1998
+    "year_joined": 1998,
+    "primary_color": "#121F48",
+    "secondary_color": "#B3272D"
   },
   "sr:competitor:2506": {
     "team_id": 4,
@@ -29,7 +35,9 @@
     "team_name_abbrev": "NY",
     "city": "Harrison",
     "year_founded": 1994,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#002f65",
+    "secondary_color": "#e31351"
   },
   "sr:competitor:2508": {
     "team_id": 5,
@@ -37,7 +45,9 @@
     "team_name_abbrev": "HOU",
     "city": "Houston",
     "year_founded": 2005,
-    "year_joined": 2006
+    "year_joined": 2006,
+    "primary_color": "#F68712",
+    "secondary_color": "#8DC6ED"
   },
   "sr:competitor:2509": {
     "team_id": 6,
@@ -45,7 +55,9 @@
     "team_name_abbrev": "SKC",
     "city": "Kansas City",
     "year_founded": 1995,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#002A5C",
+    "secondary_color": "#93B1D7"
   },
   "sr:competitor:2510": {
     "team_id": 7,
@@ -53,7 +65,9 @@
     "team_name_abbrev": "COL",
     "city": "Denver",
     "year_founded": 1995,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#862633",
+    "secondary_color": "#8BB8E8"
   },
   "sr:competitor:2511": {
     "team_id": 8,
@@ -61,7 +75,9 @@
     "team_name_abbrev": "NE",
     "city": "Foxborough",
     "year_founded": 1995,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#E51938",
+    "secondary_color": "#002B5C"
   },
   "sr:competitor:2512": {
     "team_id": 9,
@@ -69,7 +85,9 @@
     "team_name_abbrev": "DAL",
     "city": "Dallas",
     "year_founded": 1995,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#BF0D3E",
+    "secondary_color": "#00205B"
   },
   "sr:competitor:2513": {
     "team_id": 10,
@@ -77,7 +95,9 @@
     "team_name_abbrev": "LAG",
     "city": "Los Angeles",
     "year_founded": 1994,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#00245d",
+    "secondary_color": "#ffd200"
   },
   "sr:competitor:5133": {
     "team_id": 11,
@@ -85,7 +105,9 @@
     "team_name_abbrev": "RSL",
     "city": "Salt Lake City",
     "year_founded": 2004,
-    "year_joined": 2005
+    "year_joined": 2005,
+    "primary_color": "#B30838",
+    "secondary_color": "#013A81"
   },
   "sr:competitor:7080": {
     "team_id": 12,
@@ -93,7 +115,9 @@
     "team_name_abbrev": "TOR",
     "city": "Toronto",
     "year_founded": 2005,
-    "year_joined": 2007
+    "year_joined": 2007,
+    "primary_color": "#AB1E2D",
+    "secondary_color": "#3f4743"
   },
   "sr:competitor:21825": {
     "team_id": 13,
@@ -101,7 +125,9 @@
     "team_name_abbrev": "SJ",
     "city": "San Jose",
     "year_founded": 1974,
-    "year_joined": 1996
+    "year_joined": 1996,
+    "primary_color": "#1f1f1f",
+    "secondary_color": "#30457a"
   },
   "sr:competitor:22006": {
     "team_id": 14,
@@ -109,7 +135,9 @@
     "team_name_abbrev": "MON",
     "city": "Montreal",
     "year_founded": 1992,
-    "year_joined": 2012
+    "year_joined": 2012,
+    "primary_color": "#2B63AD",
+    "secondary_color": "#373536"
   },
   "sr:competitor:22007": {
     "team_id": 15,
@@ -117,7 +145,9 @@
     "team_name_abbrev": "POR",
     "city": "Portland",
     "year_founded": 1975,
-    "year_joined": 2011
+    "year_joined": 2011,
+    "primary_color": "#004812",
+    "secondary_color": "#EAE827"
   },
   "sr:competitor:22009": {
     "team_id": 16,
@@ -125,7 +155,9 @@
     "team_name_abbrev": "SEA",
     "city": "Seattle",
     "year_founded": 1973,
-    "year_joined": 2009
+    "year_joined": 2009,
+    "primary_color": "#236192",
+    "secondary_color": "#658D1B"
   },
   "sr:competitor:22010": {
     "team_id": 17,
@@ -133,7 +165,9 @@
     "team_name_abbrev": "VAN",
     "city": "Vancouver",
     "year_founded": 1973,
-    "year_joined": 2011
+    "year_joined": 2011,
+    "primary_color": "#04265c",
+    "secondary_color": "#94C2E4"
   },
   "sr:competitor:39833": {
     "team_id": 18,
@@ -141,7 +175,9 @@
     "team_name_abbrev": "PHI",
     "city": "Chester",
     "year_founded": 2008,
-    "year_joined": 2010
+    "year_joined": 2010,
+    "primary_color": "#002D55",
+    "secondary_color": "#B38707"
   },
   "sr:competitor:41618": {
     "team_id": 19,
@@ -149,7 +185,9 @@
     "team_name_abbrev": "MIN",
     "city": "Saint Paul",
     "year_founded": 2010,
-    "year_joined": 2017
+    "year_joined": 2017,
+    "primary_color": "#585958",
+    "secondary_color": "#9bcde4"
   },
   "sr:competitor:52237": {
     "team_id": 20,
@@ -157,7 +195,9 @@
     "team_name_abbrev": "ORL",
     "city": "Orlando",
     "year_founded": 2010,
-    "year_joined": 2015
+    "year_joined": 2015,
+    "primary_color": "#61259E",
+    "secondary_color": "#FFE293"
   },
   "sr:competitor:167510": {
     "team_id": 21,
@@ -165,7 +205,9 @@
     "team_name_abbrev": "NYC",
     "city": "New York City",
     "year_founded": 2013,
-    "year_joined": 2015
+    "year_joined": 2015,
+    "primary_color": "#041e42",
+    "secondary_color": "#6CACE4"
   },
   "sr:competitor:245305": {
     "team_id": 22,
@@ -173,7 +215,9 @@
     "team_name_abbrev": "CIN",
     "city": "Cincinnati",
     "year_founded": 2015,
-    "year_joined": 2019
+    "year_joined": 2019,
+    "primary_color": "#003087",
+    "secondary_color": "#FE5000"
   },
   "sr:competitor:305920": {
     "team_id": 23,
@@ -181,7 +225,9 @@
     "team_name_abbrev": "ATL",
     "city": "Atlanta",
     "year_founded": 2014,
-    "year_joined": 2017
+    "year_joined": 2017,
+    "primary_color": "#80000A",
+    "secondary_color": "#A19060"
   },
   "sr:competitor:402227": {
     "team_id": 24,
@@ -189,7 +235,9 @@
     "team_name_abbrev": "LAN",
     "city": "Los Angeles",
     "year_founded": 2014,
-    "year_joined": 2018
+    "year_joined": 2018,
+    "primary_color": "#000000",
+    "secondary_color": "#C39e6d"
   },
   "sr:competitor:659691": {
     "team_id": 25,
@@ -197,7 +245,9 @@
     "team_name_abbrev": "MIA",
     "city": "Fort Lauderdale",
     "year_founded": 2018,
-    "year_joined": 2020
+    "year_joined": 2020,
+    "primary_color": "#231F20",
+    "secondary_color": "#F7B5CD"
   },
   "sr:competitor:668063": {
     "team_id": 26,
@@ -205,7 +255,9 @@
     "team_name_abbrev": "NSC",
     "city": "Nashville",
     "year_founded": 2016,
-    "year_joined": 2020
+    "year_joined": 2020,
+    "primary_color": "#ECE83A",
+    "secondary_color": "#1F1646"
   },
   "sr:competitor:772256": {
     "team_id": 27,
@@ -213,7 +265,9 @@
     "team_name_abbrev": "ATX",
     "city": "Austin",
     "year_founded": 2018,
-    "year_joined": 2021
+    "year_joined": 2021,
+    "primary_color": "#000000",
+    "secondary_color": "#00b140"
   },
   "sr:competitor:863473": {
     "team_id": 28,
@@ -221,7 +275,9 @@
     "team_name_abbrev": "CHA",
     "city": "Charlotte",
     "year_founded": 2019,
-    "year_joined": 2022
+    "year_joined": 2022,
+    "primary_color": "#000000",
+    "secondary_color": "#1A85C8"
   },
   "sr:competitor:874725": {
     "team_id": 29,
@@ -229,6 +285,8 @@
     "team_name_abbrev": "SAI",
     "city": "St. Louis",
     "year_founded": 2019,
-    "year_joined": 2023
+    "year_joined": 2023,
+    "primary_color": "#E0004D",
+    "secondary_color": "#0C2340"
   }
 }
