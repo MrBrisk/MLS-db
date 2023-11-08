@@ -155,6 +155,10 @@ header {
   height: 25px;
 }
 
+.modalInputItem {
+  flex: 50%;
+}
+
 #modalX {
   margin-left: auto;
   cursor: pointer;
@@ -176,4 +180,9 @@ header {
 #input0 input {
   cursor: not-allowed;
   opacity: 50%;
+}
+
+.required-input {
+  border: red solid 1px;
+  border-radius: 3px;
 }

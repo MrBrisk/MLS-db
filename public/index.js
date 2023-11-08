@@ -5,6 +5,8 @@ const tableContainer = $('#tableContainer');
 const addBtn = $('#addBtn');
 const editBtn = $('#editBtn');
 let selectedRow;
+let requiredColumnsByTable = {};
+
 let modal = new tingle.modal({
   footer: true,
   stickyFooter: false,
@@ -41,14 +43,20 @@ addBtn.on('click', async function () {
       modalContent += await getIdDropdown(col, '', i);
     } else {
       let type = 'text';
-      if (col.includes('date')) {
+      if (col.includes('date_played')) {
+        type = 'datetime-local';
+      } else if (col.includes('date')) {
         type = 'date';
       } else if (col.includes('color')) {
         type = 'color';
       }
+      let asterisk = ' ';
+      if (requiredColumnsByTable[`${selectedTab}`].includes(`${col}`)) {
+        asterisk = `<span style='color: red'>* </span>`;
+      }
       modalContent +=
         `<div class='modalInputItem' id='input${i}'>` +
-        `<label for='${col}'>${col} </label>` +
+        `<label for='${col}'>${col}${asterisk}</label>` +
         `<input id='${col}' name='${col}' type='${type}' class='modalInput'><br></br>` +
         '</div>\n';
     }
@@ -61,9 +69,25 @@ addBtn.on('click', async function () {
     $('button.submit').attr('disabled', 'true');
     $('button.submit').removeClass('tingle-btn--primary').addClass('tingle-btn--primary-clicked');
     let data = {};
+    let missingRequired = false;
+    $('.dummyOption').removeAttr('disabled');
     $.each($('#modalForm').serializeArray(), function (_, kv) {
       data[kv.name] = kv.value;
+      if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
+        if (kv.value == '' || kv.value == null || kv.value == undefined) {
+          $(`#${kv.name}`).addClass('required-input');
+          missingRequired = true;
+        }
+      }
     });
+    $('.dummyOption').attr('disabled', 'true');
+    if (missingRequired) {
+      $('button.submit').removeAttr('disabled');
+      $('button.submit')
+        .addClass('tingle-btn--primary')
+        .removeClass('tingle-btn--primary-clicked');
+      return;
+    }
     $.ajax({
       url: `/add${selectedTab}`,
       type: 'POST',
@@ -98,15 +122,22 @@ editBtn.on('click', async function () {
       modalContent += await getIdDropdown(key, value, i);
     } else {
       let type = 'text';
-      if (key.includes('date')) {
+      if (key.includes('date_played')) {
+        type = 'datetime-local';
+        value = value.split('.')[0];
+      } else if (key.includes('date')) {
         type = 'date';
         value = value.split('T')[0];
       } else if (key.includes('color')) {
         type = 'color';
       }
+      let asterisk = ' ';
+      if (requiredColumnsByTable[`${selectedTab}`].includes(`${key}`)) {
+        asterisk = `<span style='color: red'>* </span>`;
+      }
       modalContent +=
         `<div class='modalInputItem' id='input${i}'>` +
-          `<label for='${key}'>${key} </label>` +
+          `<label for='${key}'>${key}${asterisk}</label>` +
           `<input id='${key}' name='${key}' type='${type}' class='modalInput' value='${value}'><br></br>` +
         '</div>\n';
     }
@@ -121,9 +152,23 @@ editBtn.on('click', async function () {
       .removeClass('tingle-btn--primary')
       .addClass('tingle-btn--primary-clicked');
     let data = {};
+    let missingRequired = false;
     $.each($('#modalForm').serializeArray(), function (_, kv) {
       data[kv.name] = kv.value;
+      if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
+        if (kv.value == '' || kv.value == null || kv.value == undefined) {
+          $(`#${kv.name}`).addClass('required-input');
+          missingRequired = true;
+        }
+      }
     });
+    if (missingRequired) {
+      $('button.submit').removeAttr('disabled');
+      $('button.submit')
+        .addClass('tingle-btn--primary')
+        .removeClass('tingle-btn--primary-clicked');
+      return;
+    }
     $.ajax({
       url: `/edit${selectedTab}`,
       type: 'POST',
@@ -172,6 +217,10 @@ $('#outputSelectItems ul li').on('click', function (event) {
   changeTab($(event.target).attr('data-value'));
 });
 
+$(document).on('change', '.required-input', function (event) {
+  $(event.target).removeClass('required-input');
+});
+
 function changeTab(tab) {
   selectedTab = tab;
   tableContainer.attr('hidden', true);
@@ -202,6 +251,17 @@ function getEntity() {
     type: 'GET',
     dataType: 'json',
     success: (response) => {
+      // get required fields
+      if (requiredColumnsByTable[`${selectedTab}`] == null) {
+        let required = [];
+        for (let i in response[1]) {
+          const info = response[1][i];
+          if (info['flags'] % 2 != 0) {
+            required.push(info['name']);
+          }
+        }
+        requiredColumnsByTable[`${selectedTab}`] = required;
+      }
       createDataTable(response[0]);
     },
     failure: (response) => {
@@ -258,10 +318,15 @@ async function getIdDropdown(key, value, i) {
     type: 'GET',
     dataType: 'json',
   });
+  let asterisk = ' ';
+  if (requiredColumnsByTable[`${selectedTab}`].includes(`${key}`)) {
+    asterisk = `<span style='color: red'>* </span>`;
+  }
   let select =
     `<div class='modalInputItem' id='input${i}'>\n` +
-    `<label for='${key}'>${key} </label>\n` +
-    `<select class='modalInput' name=${key}>\n`;
+      `<label for='${key}'>${key}${asterisk}</label>\n` +
+      `<select class='modalInput' name='${key}' id='${key}'>\n` +
+        `<option disabled selected class='dummyOption'></option>`;
   for (const i in res[0]) {
     const id = Object.values(res[0][i])[0];
     const selected = value == id ? 'selected' : '';

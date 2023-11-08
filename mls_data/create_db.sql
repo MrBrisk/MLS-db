@@ -14,8 +14,8 @@ CREATE TABLE Team (
 
 CREATE TABLE Player (
     player_id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50),
     date_of_birth DATE NOT NULL,
     nationality VARCHAR(64) NOT NULL,
     height_cm SMALLINT NOT NULL,
