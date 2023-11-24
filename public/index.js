@@ -62,6 +62,7 @@ addBtn.on('click', async function () {
     }
     i++;
   }
+
   modalContent += "</form>\n</div>";
   modal.setContent(modalContent);
   modal.setFooterContent('');
@@ -71,6 +72,7 @@ addBtn.on('click', async function () {
     let data = {};
     let missingRequired = false;
     $('.dummyOption').removeAttr('disabled');
+
     $.each($('#modalForm').serializeArray(), function (_, kv) {
       data[kv.name] = kv.value;
       if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
@@ -80,6 +82,7 @@ addBtn.on('click', async function () {
         }
       }
     });
+
     $('.dummyOption').attr('disabled', 'true');
     if (missingRequired) {
       $('button.submit').removeAttr('disabled');
@@ -88,6 +91,7 @@ addBtn.on('click', async function () {
         .removeClass('tingle-btn--primary-clicked');
       return;
     }
+
     $.ajax({
       url: `/add${selectedTab}`,
       type: 'POST',
@@ -117,6 +121,7 @@ editBtn.on('click', async function () {
     "<div class='modalInputs'>" +
       "<form id='modalForm'>\n";
   let i = 0;
+
   for (let [key, value] of Object.entries(selectedRow)) {
     if (i != 0 && key.includes('_id')) {
       modalContent += await getIdDropdown(key, value, i);
@@ -146,6 +151,7 @@ editBtn.on('click', async function () {
   modalContent += "</form>\n</div>";
   modal.setContent(modalContent);
   modal.setFooterContent('');
+
   modal.addFooterBtn(`Update ${selectedTab}`, 'tingle-btn tingle-btn--primary tingle-btn--pull-right', function () {
     $('button.submit').attr('disabled', 'true');
     $('button.submit')
@@ -153,6 +159,7 @@ editBtn.on('click', async function () {
       .addClass('tingle-btn--primary-clicked');
     let data = {};
     let missingRequired = false;
+
     $.each($('#modalForm').serializeArray(), function (_, kv) {
       data[kv.name] = kv.value;
       if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
@@ -162,6 +169,7 @@ editBtn.on('click', async function () {
         }
       }
     });
+
     if (missingRequired) {
       $('button.submit').removeAttr('disabled');
       $('button.submit')
@@ -169,6 +177,7 @@ editBtn.on('click', async function () {
         .removeClass('tingle-btn--primary-clicked');
       return;
     }
+
     $.ajax({
       url: `/edit${selectedTab}`,
       type: 'POST',
@@ -183,6 +192,7 @@ editBtn.on('click', async function () {
       },
     });
   });
+
   modal.addFooterBtn(`Delete ${selectedTab}`, 'tingle-btn tingle-btn--danger', function () {
     $('button.tingle-btn--danger').attr('disabled', 'true');
     $('button.tingle-btn--danger')
@@ -205,6 +215,7 @@ editBtn.on('click', async function () {
       },
     });
   });
+
   $('#input0').attr('disabled', 'true');
   modal.open();
 });
@@ -271,6 +282,7 @@ function getEntity() {
 }
 
 function createDataTable(data) {
+  // no selecting table on advanced queries
   const selectOptions = selectedTab == 'Advanced Queries' ? false : {style: 'single'};
   let columns = [];
   let columnNames = Object.keys(data[0]);

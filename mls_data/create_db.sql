@@ -18,9 +18,9 @@ CREATE TABLE Player (
     last_name VARCHAR(50),
     date_of_birth DATE NOT NULL,
     nationality VARCHAR(64) NOT NULL,
-    height_cm SMALLINT NOT NULL,
-    weight_kg SMALLINT NOT NULL,
-    jersey_number SMALLINT NOT NULL,
+    height_cm SMALLINT,
+    weight_kg SMALLINT,
+    jersey_number SMALLINT,
     position ENUM('forward', 'midfielder', 'defender', 'goalkeeper') NOT NULL
 );
 

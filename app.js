@@ -69,7 +69,6 @@ app.get('/getGameIds', async (req, res) => {
 
 app.post('/addTeam', async (req, res) => {
   const result = await addTeam(
-    null,
     req.body['team_name'],
     req.body['team_name_abbrev'],
     parseInt(req.body['year_founded']),
@@ -83,7 +82,6 @@ app.post('/addTeam', async (req, res) => {
 
 app.post('/addPlayer', async (req, res) => {
   const result = await addPlayer(
-    null,
     req.body['first_name'],
     req.body['last_name'],
     req.body['date_of_birth'],
@@ -98,7 +96,6 @@ app.post('/addPlayer', async (req, res) => {
 
 app.post('/addGame', async (req, res) => {
   const result = await addGame(
-    null,
     req.body['date_played'],
     parseInt(req.body['home_team_score']),
     parseInt(req.body['away_team_score']),
