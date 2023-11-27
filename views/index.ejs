@@ -43,15 +43,37 @@
         <button class='table-action-btn' id='editBtn' hidden>
           Edit Team
         </button>
-        <button class='table-action-btn query-btn' hidden>Query #1</button>
-        <button class='table-action-btn query-btn' hidden>Query #2</button>
-        <button class='table-action-btn query-btn' hidden>Query #3</button>
-        <button class='table-action-btn query-btn' hidden>Query #4</button>
-        <button class='table-action-btn query-btn' hidden>Query #5</button>
-        <button class='table-action-btn query-btn' hidden>Query #6</button>
+        <div id='advancedQueries'>
+          <div class='advanced-query-group' id='advQuery1'>
+            <button class='table-action-btn query-btn' hidden>Query #1</button>
+            <p class='query-description' hidden>
+              Select the 5 players with the most goals in a given season.
+            </p>
+            <div class='advanced-query-options' hidden>
+              <button class='query-options-btn' id='currentOption'>2021</button>
+              <button class='query-options-btn'>2022</button>
+              <button class='query-options-btn'>2023</button>
+            </div>
+          </div>
+          <div class='advanced-query-group' id='advQuery2'>
+            <button class='table-action-btn query-btn' hidden>Query #2</button>
+          </div>
+          <div class='advanced-query-group' id='advQuery3'>
+            <button class='table-action-btn query-btn' hidden>Query #3</button>
+          </div>
+          <div class='advanced-query-group' id='advQuery4'>
+            <button class='table-action-btn query-btn' hidden>Query #4</button>
+          </div>
+          <div class='advanced-query-group' id='advQuery5'>
+            <button class='table-action-btn query-btn' hidden>Query #5</button>
+          </div>
+          <div class='advanced-query-group' id='advQuery6'>
+            <button class='table-action-btn query-btn' hidden>Query #6</button>
+          </div>
+        </div>
       </div>
-      <div id='loading'>Loading</div>
       <div id='tableContainer'>
+        <div id='loading'>Loading</div>
         <table id='outputTable'>
           <thead></thead>
           <tbody></tbody>

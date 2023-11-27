@@ -43,13 +43,16 @@ header {
 #flexContainer {
   display: flex;
   max-width: 100%;
+  height: 71vh;
 }
 
 #queryButtons {
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
+  max-height: 100%;
+  overflow: scroll;
+  max-width: 15%;
 }
 
 .table-action-btn {
@@ -61,6 +64,56 @@ header {
   padding: 10px;
   cursor: pointer;
   margin-top: 20px;
+}
+
+.table-action-btn:active {
+  background-color: #000000 !important;
+}
+
+.table-action-btn:hover {
+  background-color: rgb(13, 16, 20)
+}
+
+.query-options-btn {
+  border: solid #30363d 1px;
+  border-radius: 2px;
+  background-color: #010409;
+  color: lightgray;
+  font-family: "Courier New", Courier, monospace;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.query-options-btn:active {
+  background-color: #000000 !important;
+}
+
+.query-options-btn:hover {
+  background-color: rgb(13, 16, 20)
+}
+
+#advancedQueries {
+  margin-right: 2px;
+}
+
+#currentOption {
+  border: solid #334769 1.5px;
+  cursor: default !important;
+  background-color: #000000 !important;
+}
+
+#currentQuery {
+  border: solid #334769 1.5px;
+  border-radius: 2px;
+  cursor: default !important;
+  background-color: #000000 !important;
+}
+
+.query-description {
+  font-size: 12px;
+  border: solid #30363d 1px;
+  border-radius: 1px;
+  padding: 5px;
 }
 
 #currentTab {
@@ -106,6 +159,8 @@ header {
   padding: 5px;
   font-size: 14px;
   min-width: 80%;
+  margin-right: 10px;
+  margin-left: 20px;
 }
 
 .dataTable {

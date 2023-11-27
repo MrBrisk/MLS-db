@@ -165,3 +165,16 @@ export async function deleteGame(game_id) {
     WHERE game_id = ${game_id}`
   );
 }
+
+export async function advancedQuery1(season) {
+  return await pool.query(`
+  SELECT p.first_name, p.last_name, SUM(Player_Game_Stats.goals) AS total_goals
+    FROM player AS p
+      JOIN Player_Game_Stats ON p.player_id = Player_Game_Stats.player_id
+    WHERE Player_Game_Stats.season = ?
+    GROUP BY p.player_id
+    ORDER BY total_goals DESC
+    LIMIT 5;`,
+  season
+);
+}

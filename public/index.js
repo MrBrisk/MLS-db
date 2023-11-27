@@ -1,7 +1,7 @@
 let selectedTab = 'Team';
 let outputTable;
 const loader = $('#loading');
-const tableContainer = $('#tableContainer');
+const tableElement = $('#outputTable');
 const addBtn = $('#addBtn');
 const editBtn = $('#editBtn');
 let selectedRow;
@@ -20,7 +20,7 @@ let modal = new tingle.modal({
 });
 
 $(function () {
-  tableContainer.attr('hidden', true);
+  tableElement.attr('hidden', true);
   getEntity();
 });
 
@@ -66,46 +66,9 @@ addBtn.on('click', async function () {
   modalContent += "</form>\n</div>";
   modal.setContent(modalContent);
   modal.setFooterContent('');
-  modal.addFooterBtn(`Add ${selectedTab}`, 'tingle-btn tingle-btn--primary tingle-btn--pull-right submit', function () {
-    $('button.submit').attr('disabled', 'true');
-    $('button.submit').removeClass('tingle-btn--primary').addClass('tingle-btn--primary-clicked');
-    let data = {};
-    let missingRequired = false;
-    $('.dummyOption').removeAttr('disabled');
 
-    $.each($('#modalForm').serializeArray(), function (_, kv) {
-      data[kv.name] = kv.value;
-      if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
-        if (kv.value == '' || kv.value == null || kv.value == undefined) {
-          $(`#${kv.name}`).addClass('required-input');
-          missingRequired = true;
-        }
-      }
-    });
+  addModalAddButton();
 
-    $('.dummyOption').attr('disabled', 'true');
-    if (missingRequired) {
-      $('button.submit').removeAttr('disabled');
-      $('button.submit')
-        .addClass('tingle-btn--primary')
-        .removeClass('tingle-btn--primary-clicked');
-      return;
-    }
-
-    $.ajax({
-      url: `/add${selectedTab}`,
-      type: 'POST',
-      data: data,
-      success: () => {
-        modal.close();
-        changeTab(selectedTab);
-      },
-      failure: (response) => {
-        console.log(response);
-        modal.close();
-      },
-    });
-  });
   const idInput = $('#input0 input');
   idInput.attr('disabled', 'true');
   modal.open();
@@ -152,69 +115,9 @@ editBtn.on('click', async function () {
   modal.setContent(modalContent);
   modal.setFooterContent('');
 
-  modal.addFooterBtn(`Update ${selectedTab}`, 'tingle-btn tingle-btn--primary tingle-btn--pull-right', function () {
-    $('button.submit').attr('disabled', 'true');
-    $('button.submit')
-      .removeClass('tingle-btn--primary')
-      .addClass('tingle-btn--primary-clicked');
-    let data = {};
-    let missingRequired = false;
+  addModalEditButton();
 
-    $.each($('#modalForm').serializeArray(), function (_, kv) {
-      data[kv.name] = kv.value;
-      if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
-        if (kv.value == '' || kv.value == null || kv.value == undefined) {
-          $(`#${kv.name}`).addClass('required-input');
-          missingRequired = true;
-        }
-      }
-    });
-
-    if (missingRequired) {
-      $('button.submit').removeAttr('disabled');
-      $('button.submit')
-        .addClass('tingle-btn--primary')
-        .removeClass('tingle-btn--primary-clicked');
-      return;
-    }
-
-    $.ajax({
-      url: `/edit${selectedTab}`,
-      type: 'POST',
-      data: data,
-      success: () => {
-        modal.close();
-        changeTab(selectedTab);
-      },
-      failure: (response) => {
-        console.log(response);
-        modal.close();
-      },
-    });
-  });
-
-  modal.addFooterBtn(`Delete ${selectedTab}`, 'tingle-btn tingle-btn--danger', function () {
-    $('button.tingle-btn--danger').attr('disabled', 'true');
-    $('button.tingle-btn--danger')
-      .removeClass('tingle-btn--danger')
-      .addClass('tingle-btn--danger-clicked');
-    const idInput = $('#input0 input')[0];
-    let data = {};
-    data[idInput.id] = idInput.value;
-    $.ajax({
-      url: `/delete${selectedTab}`,
-      type: 'POST',
-      data: data,
-      success: () => {
-        modal.close();
-        changeTab(selectedTab);
-      },
-      failure: (response) => {
-        console.log(response);
-        modal.close();
-      },
-    });
-  });
+  addModalDeleteButton();
 
   $('#input0').attr('disabled', 'true');
   modal.open();
@@ -232,9 +135,41 @@ $(document).on('change', '.required-input', function (event) {
   $(event.target).removeClass('required-input');
 });
 
+$('.query-btn').on('click', function (event) {
+  if (event.target.id == 'currentQuery') return;
+  const oldButton = $('#currentQuery')[0];
+  if (oldButton != null) {
+    oldButton.id = '';
+    $('.currentGroup p').attr('hidden', true);
+    $('.currentGroup div').attr('hidden', true);
+    $('.currentGroup')[0].classList.remove('currentGroup');
+  }
+  event.target.id = 'currentQuery';
+  event.target.parentElement.classList.add('currentGroup');
+  $('.currentGroup p').attr('hidden', false);
+  $('.currentGroup div').attr('hidden', false);
+
+  executeAdvancedQuery({
+    queryId: $('.currentGroup')[0].id,
+    value: $('#currentOption')[0].innerText
+  });
+});
+
+$('.query-options-btn').on('click', function (event) {
+  if (event.target.id == 'currentOption') return;
+  const oldButton = $('.currentGroup div #currentOption')[0];
+  oldButton.id = '';
+  event.target.id = 'currentOption';
+
+  executeAdvancedQuery({
+    queryId: $('.currentGroup')[0].id,
+    value: $('#currentOption')[0].innerText
+  });
+});
+
 function changeTab(tab) {
   selectedTab = tab;
-  tableContainer.attr('hidden', true);
+  tableElement.attr('hidden', true);
   loader.attr('hidden', false);
   outputTable.destroy();
   $('#outputTable tbody').empty();
@@ -244,13 +179,19 @@ function changeTab(tab) {
   addBtn.attr('hidden', false);
   editBtn.attr('hidden', true);
   $('.query-btn').attr('hidden', true);
+  const oldButton = $('#currentQuery')[0];
+  if (oldButton != null) {
+    oldButton.id = '';
+    $('.currentGroup p').attr('hidden', true);
+    $('.currentGroup div').attr('hidden', true);
+    $('.currentGroup')[0].classList.remove('currentGroup');
+  }
   
   if (tab == 'Advanced Queries') {
     addBtn.attr('hidden', true);
     editBtn.attr('hidden', true);
     $('.query-btn').attr('hidden', false);
-    const data = [{ id: '' }];
-    createDataTable(data);
+    createDataTable([{ id: '' }]);
   } else {
     getEntity();
   }
@@ -292,7 +233,7 @@ function createDataTable(data) {
       title: columnNames[i],
     });
   }
-  tableContainer.attr('hidden', false);
+  tableElement.attr('hidden', false);
   outputTable = new DataTable('#outputTable', {
     columns: columns,
     data: data,
@@ -346,4 +287,151 @@ async function getIdDropdown(key, value, i) {
   }
   select += '</select><br></br>' + '</div>\n';
   return select;
+}
+
+function addModalAddButton() {
+  modal.addFooterBtn(
+    `Add ${selectedTab}`,
+    'tingle-btn tingle-btn--primary tingle-btn--pull-right submit',
+    function () {
+      $('button.submit').attr('disabled', 'true');
+      $('button.submit')
+        .removeClass('tingle-btn--primary')
+        .addClass('tingle-btn--primary-clicked');
+      let data = {};
+      let missingRequired = false;
+      $('.dummyOption').removeAttr('disabled');
+
+      $.each($('#modalForm').serializeArray(), function (_, kv) {
+        data[kv.name] = kv.value;
+        if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
+          if (kv.value == '' || kv.value == null || kv.value == undefined) {
+            $(`#${kv.name}`).addClass('required-input');
+            missingRequired = true;
+          }
+        }
+      });
+
+      $('.dummyOption').attr('disabled', 'true');
+      if (missingRequired) {
+        $('button.submit').removeAttr('disabled');
+        $('button.submit')
+          .addClass('tingle-btn--primary')
+          .removeClass('tingle-btn--primary-clicked');
+        return;
+      }
+
+      $.ajax({
+        url: `/add${selectedTab}`,
+        type: 'POST',
+        data: data,
+        success: () => {
+          modal.close();
+          changeTab(selectedTab);
+        },
+        failure: (response) => {
+          console.log(response);
+          modal.close();
+        },
+      });
+    }
+  );
+}
+
+function addModalEditButton() {
+  modal.addFooterBtn(
+    `Update ${selectedTab}`,
+    'tingle-btn tingle-btn--primary tingle-btn--pull-right',
+    function () {
+      $('button.submit').attr('disabled', 'true');
+      $('button.submit')
+        .removeClass('tingle-btn--primary')
+        .addClass('tingle-btn--primary-clicked');
+      let data = {};
+      let missingRequired = false;
+
+      $.each($('#modalForm').serializeArray(), function (_, kv) {
+        data[kv.name] = kv.value;
+        if (requiredColumnsByTable[`${selectedTab}`].includes(kv.name)) {
+          if (kv.value == '' || kv.value == null || kv.value == undefined) {
+            $(`#${kv.name}`).addClass('required-input');
+            missingRequired = true;
+          }
+        }
+      });
+
+      if (missingRequired) {
+        $('button.submit').removeAttr('disabled');
+        $('button.submit')
+          .addClass('tingle-btn--primary')
+          .removeClass('tingle-btn--primary-clicked');
+        return;
+      }
+
+      $.ajax({
+        url: `/edit${selectedTab}`,
+        type: 'POST',
+        data: data,
+        success: () => {
+          modal.close();
+          changeTab(selectedTab);
+        },
+        failure: (response) => {
+          console.log(response);
+          modal.close();
+        },
+      });
+    }
+  );
+}
+
+function addModalDeleteButton() {
+  modal.addFooterBtn(
+    `Delete ${selectedTab}`,
+    'tingle-btn tingle-btn--danger',
+    function () {
+      $('button.tingle-btn--danger').attr('disabled', 'true');
+      $('button.tingle-btn--danger')
+        .removeClass('tingle-btn--danger')
+        .addClass('tingle-btn--danger-clicked');
+      const idInput = $('#input0 input')[0];
+      let data = {};
+      data[idInput.id] = idInput.value;
+      $.ajax({
+        url: `/delete${selectedTab}`,
+        type: 'POST',
+        data: data,
+        success: () => {
+          modal.close();
+          changeTab(selectedTab);
+        },
+        failure: (response) => {
+          console.log(response);
+          modal.close();
+        },
+      });
+    }
+  );
+}
+
+function executeAdvancedQuery(data) {
+  tableElement.attr('hidden', true);
+  loader.attr('hidden', false);
+  outputTable.destroy();
+  $('#outputTable tbody').empty();
+  $('#outputTable thead').empty();
+  $.ajax({
+    url: `/${data['queryId']}`,
+    type: 'POST',
+    data: {
+      value: data['value']
+    },
+    dataType: 'json',
+    success: (response) => {
+      createDataTable(response[0]);
+    },
+    failure: (response) => {
+      console.log(response);
+    }
+  });
 }
