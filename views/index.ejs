@@ -26,6 +26,9 @@
     <header style='display: flex; padding: 2px'>
       <img src='/logo.svg' width='40vh' height='40vh'></img>
       <div class='header-logo'>MLS_DB</div>
+      <div id='currentDate'>
+        <%= new Date().toUTCString();%>
+      </div>
     </header>
     <div id='outputSelectItems'>
       <ul>
@@ -50,13 +53,21 @@
               Select the 5 players with the most goals in a given season.
             </p>
             <div class='advanced-query-options' hidden>
-              <button class='query-options-btn' id='currentOption'>2021</button>
+              <button class='query-options-btn currentOption'>2021</button>
               <button class='query-options-btn'>2022</button>
               <button class='query-options-btn'>2023</button>
             </div>
           </div>
           <div class='advanced-query-group' id='advQuery2'>
             <button class='table-action-btn query-btn' hidden>Query #2</button>
+            <p class='query-description' hidden>
+              Get the average number of yellow cards per game for each team by season.
+            </p>
+            <div class='advanced-query-options' hidden>
+              <button class='query-options-btn currentOption'>2021</button>
+              <button class='query-options-btn'>2022</button>
+              <button class='query-options-btn'>2023</button>
+            </div>
           </div>
           <div class='advanced-query-group' id='advQuery3'>
             <button class='table-action-btn query-btn' hidden>Query #3</button>

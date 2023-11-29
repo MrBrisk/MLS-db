@@ -124,7 +124,8 @@ export async function editTeam(data) {
 export async function deleteTeam(team_id) {
   return await pool.query(`
   DELETE FROM team
-    WHERE team_id = ${team_id}`
+    WHERE team_id = ?`,
+    team_id
   );
 }
 
@@ -143,7 +144,8 @@ export async function editPlayer(data) {
 export async function deletePlayer(player_id) {
   return await pool.query(`
   DELETE FROM player
-    WHERE player_id = ${player_id}`
+    WHERE player_id = ?`,
+    player_id
   );
 }
 
@@ -162,7 +164,8 @@ export async function editGame(data) {
 export async function deleteGame(game_id) {
   return await pool.query(`
   DELETE FROM game
-    WHERE game_id = ${game_id}`
+    WHERE game_id = ?`,
+    game_id
   );
 }
 
@@ -175,6 +178,20 @@ export async function advancedQuery1(season) {
     GROUP BY p.player_id
     ORDER BY total_goals DESC
     LIMIT 5;`,
-  season
-);
+    season
+  );
+}
+
+export async function advancedQuery2(season) {
+  return await pool.query(`
+  SELECT Team.team_name, AVG(Player_Game_Stats.yellow_cards) AS avg_yellow_cards
+    FROM Team
+      JOIN Player_Team_Season ON Team.team_id = Player_Team_Season.team_id
+      JOIN Player_Game_Stats ON Player_Team_Season.player_id = Player_Game_Stats.player_id
+      JOIN Game ON Player_Game_Stats.game_id = Game.game_id
+    WHERE Game.game_type = 'regular season' AND Player_Game_Stats.season = ?
+    GROUP BY Team.team_id
+    ORDER BY avg_yellow_cards DESC;`,
+    season
+  );
 }

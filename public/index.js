@@ -151,19 +151,19 @@ $('.query-btn').on('click', function (event) {
 
   executeAdvancedQuery({
     queryId: $('.currentGroup')[0].id,
-    value: $('#currentOption')[0].innerText
+    value: $('.currentGroup div button.currentOption')[0].innerText
   });
 });
 
 $('.query-options-btn').on('click', function (event) {
-  if (event.target.id == 'currentOption') return;
-  const oldButton = $('.currentGroup div #currentOption')[0];
-  oldButton.id = '';
-  event.target.id = 'currentOption';
+  if (event.target.classList.contains('currentOption')) return;
+  const oldButton = $('.currentGroup div button.currentOption')[0];
+  oldButton.classList.remove('currentOption');
+  event.target.classList.add('currentOption');
 
   executeAdvancedQuery({
     queryId: $('.currentGroup')[0].id,
-    value: $('#currentOption')[0].innerText
+    value: $('.currentGroup div button.currentOption')[0].innerText
   });
 });
 

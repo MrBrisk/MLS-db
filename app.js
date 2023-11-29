@@ -17,7 +17,8 @@ import {
   deleteTeam,
   deletePlayer,
   deleteGame,
-  advancedQuery1
+  advancedQuery1,
+  advancedQuery2
 } from './database.js';
 
 const app = express();
@@ -70,6 +71,11 @@ app.get('/getGameIds', async (req, res) => {
 
 app.post('/advQuery1', async (req, res) => {
   const query = await advancedQuery1(parseInt(req.body['value']));
+  res.send(query);
+});
+
+app.post('/advQuery2', async (req, res) => {
+  const query = await advancedQuery2(parseInt(req.body['value']));
   res.send(query);
 });
 

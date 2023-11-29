@@ -20,6 +20,13 @@ header {
   padding: 5px;
 }
 
+#currentDate {
+  margin-left: auto;
+  margin-top: auto;
+  font-family: "Courier New", Courier, monospace;
+  color: rgb(82, 81, 81);
+}
+
 #outputSelectItems ul {
   margin: 0;
   list-style-type: none;
@@ -96,7 +103,7 @@ header {
   margin-right: 2px;
 }
 
-#currentOption {
+.currentOption {
   border: solid #334769 1.5px;
   cursor: default !important;
   background-color: #000000 !important;
