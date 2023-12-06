@@ -84,7 +84,7 @@ app.post('/advQuery2', async (req, res) => {
 });
 
 app.post('/advQuery3', async (req, res) => {
-  const query = await advancedQuery3();
+  const query = await advancedQuery3(parseInt(req.body['value']));
   res.send(query);
 });
 

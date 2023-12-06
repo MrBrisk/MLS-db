@@ -196,7 +196,7 @@ export async function advancedQuery2(season) {
   );
 }
 
-export async function advancedQuery3() {
+export async function advancedQuery3(value) {
   return await pool.query(`
   SELECT home_team_score AS HomeScore, homeTeam.team_name AS HomeTeam, away_team_score AS AwayScore, awayTeam.team_name AS AwayTeam, home_team_score + away_team_score AS GameScore
     FROM game JOIN home_team_game
@@ -206,8 +206,9 @@ export async function advancedQuery3() {
         ON away_team_game.team_id = awayTeam.team_id
     WHERE game_type = 'regular season'
     GROUP BY GameScore, game.game_id, homeTeam.team_name, awayTeam.team_name
-    HAVING GameScore > 6
-    ORDER BY GameScore DESC, game.game_id DESC;`
+    HAVING GameScore > ?
+    ORDER BY GameScore DESC, game.game_id DESC;`,
+    value
   );
 }
 

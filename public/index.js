@@ -149,7 +149,7 @@ $('.query-btn').on('click', function (event) {
   $('.currentGroup p').attr('hidden', false);
   $('.currentGroup div').attr('hidden', false);
 
-  const currentOption = $('.currentGroup div button.currentOption')[0];
+  const currentOption = $('.currentGroup')[0].id == 'advQuery3' ? $('#currentRangeValue')[0] : $('.currentGroup div button.currentOption')[0];
   executeAdvancedQuery({
     queryId: $('.currentGroup')[0].id,
     value: currentOption == null ? '' : currentOption.innerText
@@ -158,13 +158,19 @@ $('.query-btn').on('click', function (event) {
 
 $('.query-options-btn').on('click', function (event) {
   if (event.target.classList.contains('currentOption')) return;
-  const oldButton = $('.currentGroup div button.currentOption')[0];
-  oldButton.classList.remove('currentOption');
-  event.target.classList.add('currentOption');
+  let value;
+  if (event.target.classList.contains('range-submit')) {
+    value = $('#currentRangeValue')[0].innerText;
+  } else {
+    const oldButton = $('.currentGroup div button.currentOption')[0];
+    oldButton.classList.remove('currentOption');
+    event.target.classList.add('currentOption');
+    value = $('.currentGroup div button.currentOption')[0].innerText;
+  }
 
   executeAdvancedQuery({
     queryId: $('.currentGroup')[0].id,
-    value: $('.currentGroup div button.currentOption')[0].innerText
+    value: value
   });
 });
 

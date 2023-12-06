@@ -72,8 +72,13 @@
           <div class='advanced-query-group' id='advQuery3'>
             <button class='table-action-btn query-btn' hidden>Query #3</button>
             <p class='query-description' hidden>
-              List games in which the total number of goals scored by both teams is greater than 6.
+              List games in which the total number of goals scored by both teams is greater than a given value.
             </p>
+            <div class='advanced-query-options' hidden>
+              <input type='range' min='0' max='10' value='5' class='query-range' oninput='this.nextElementSibling.value = this.value'>
+              <output id='currentRangeValue'>5</output>
+              <button class='query-options-btn range-submit'>Submit</button>
+            </div>
           </div>
           <div class='advanced-query-group' id='advQuery4'>
             <button class='table-action-btn query-btn' hidden>Query #4</button>
