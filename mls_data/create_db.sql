@@ -27,6 +27,7 @@ CREATE TABLE Player (
 CREATE TABLE Game (
     game_id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     date_played DATETIME NOT NULL,
+    season YEAR NOT NULL,
     home_team_score SMALLINT NOT NULL,
     away_team_score SMALLINT NOT NULL,
     home_team_id INTEGER NOT NULL,

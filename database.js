@@ -27,11 +27,11 @@ export async function addPlayer(first_name, last_name, date_of_birth, nationalit
   );
 }
 
-export async function addGame(date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round) {
+export async function addGame(date_played, season, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round) {
   return await pool.query(`
-  INSERT INTO game (date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round)
-    VALUES(?, ?, ?, ?, ?, ?, ?)`,
-    [date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round]
+  INSERT INTO game (date_played, season, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round)
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+    [date_played, season, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round]
   );
 }
 
@@ -192,6 +192,77 @@ export async function advancedQuery2(season) {
     WHERE Game.game_type = 'regular season' AND Player_Game_Stats.season = ?
     GROUP BY Team.team_id
     ORDER BY avg_yellow_cards DESC;`,
+    season
+  );
+}
+
+export async function advancedQuery3() {
+  return await pool.query(`
+  SELECT home_team_score AS HomeScore, homeTeam.team_name AS HomeTeam, away_team_score AS AwayScore, awayTeam.team_name AS AwayTeam, home_team_score + away_team_score AS GameScore
+    FROM game JOIN home_team_game
+        ON game.game_id = home_team_game.game_id JOIN team AS homeTeam
+        ON home_team_game.team_id = homeTeam.team_id JOIN away_team_game
+        ON game.game_id = away_team_game.game_id JOIN team AS awayTeam
+        ON away_team_game.team_id = awayTeam.team_id
+    WHERE game_type = 'regular season'
+    GROUP BY GameScore, game.game_id, homeTeam.team_name, awayTeam.team_name
+    HAVING GameScore > 6
+    ORDER BY GameScore DESC, game.game_id DESC;`
+  );
+}
+
+export async function advancedQuery4(season) {
+  return await pool.query(`
+  SELECT DISTINCT first_name, last_name
+    FROM player JOIN player_game_stats
+        ON player.player_id = player_game_stats.player_id
+    GROUP BY player.player_id, season
+    HAVING sum(minutes_played) = 0 AND season = ?;`,
+    season
+  );
+}
+
+export async function advancedQuery5(season) {
+  return await pool.query(
+    `
+  SELECT t.team_name,
+    (SELECT COUNT(*)
+        FROM game AS g
+        WHERE g.game_type = 'regular season' AND
+            g.season = ? AND
+            ((t.team_id = g.home_team_id AND g.home_team_score > g.away_team_score) OR
+            (t.team_id = g.away_team_id AND g.away_team_score > g.home_team_score))
+    ) AS wins,
+    (SELECT COUNT(*)
+        FROM game AS g
+        WHERE g.game_type = 'regular season' AND
+            g.season = ? AND
+            ((t.team_id = g.home_team_id AND g.home_team_score = g.away_team_score) OR
+            (t.team_id = g.away_team_id AND g.away_team_score = g.home_team_score))
+    ) AS draws,
+    (SELECT COUNT(*)
+        FROM game AS g
+        WHERE g.game_type = 'regular season' AND
+            g.season = ? AND
+            ((t.team_id = g.home_team_id AND g.home_team_score < g.away_team_score) OR
+            (t.team_id = g.away_team_id AND g.away_team_score < g.home_team_score))
+    ) AS losses,
+    (SELECT (wins * 3 + draws)) AS points
+    FROM team AS t
+    ORDER BY points DESC;`,
+    [season, season, season]
+  );
+}
+
+export async function advancedQuery6(season) {
+  return await pool.query(`
+  SELECT DISTINCT changedTeam.first_name, changedTeam.last_name
+    FROM player_team_season JOIN (SELECT player.player_id, player.first_name, player.last_name
+            FROM player_team_season JOIN player
+                ON player_team_season.player_id = player.player_id
+            GROUP BY player.player_id, season
+            HAVING count(team_id) > 1 AND season = ?) AS changedTeam
+        ON changedTeam.player_id = player_team_season.player_id;`,
     season
   );
 }

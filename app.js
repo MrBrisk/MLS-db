@@ -18,7 +18,11 @@ import {
   deletePlayer,
   deleteGame,
   advancedQuery1,
-  advancedQuery2
+  advancedQuery2,
+  advancedQuery3,
+  advancedQuery4,
+  advancedQuery5,
+  advancedQuery6
 } from './database.js';
 
 const app = express();
@@ -79,6 +83,26 @@ app.post('/advQuery2', async (req, res) => {
   res.send(query);
 });
 
+app.post('/advQuery3', async (req, res) => {
+  const query = await advancedQuery3();
+  res.send(query);
+});
+
+app.post('/advQuery4', async (req, res) => {
+  const query = await advancedQuery4(parseInt(req.body['value']));
+  res.send(query);
+});
+
+app.post('/advQuery5', async (req, res) => {
+  const query = await advancedQuery5(req.body['value']);
+  res.send(query);
+});
+
+app.post('/advQuery6', async (req, res) => {
+  const query = await advancedQuery6(parseInt(req.body['value']));
+  res.send(query);
+});
+
 app.post('/addTeam', async (req, res) => {
   const result = await addTeam(
     req.body['team_name'],
@@ -109,6 +133,7 @@ app.post('/addPlayer', async (req, res) => {
 app.post('/addGame', async (req, res) => {
   const result = await addGame(
     req.body['date_played'],
+    req.body['season'],
     parseInt(req.body['home_team_score']),
     parseInt(req.body['away_team_score']),
     parseInt(req.body['home_team_id']),

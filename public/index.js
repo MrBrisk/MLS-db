@@ -149,9 +149,10 @@ $('.query-btn').on('click', function (event) {
   $('.currentGroup p').attr('hidden', false);
   $('.currentGroup div').attr('hidden', false);
 
+  const currentOption = $('.currentGroup div button.currentOption')[0];
   executeAdvancedQuery({
     queryId: $('.currentGroup')[0].id,
-    value: $('.currentGroup div button.currentOption')[0].innerText
+    value: currentOption == null ? '' : currentOption.innerText
   });
 });
 
@@ -226,6 +227,9 @@ function createDataTable(data) {
   // no selecting table on advanced queries
   const selectOptions = selectedTab == 'Advanced Queries' ? false : {style: 'single'};
   let columns = [];
+  if (data.length == 0) {
+    data = [{ id: '' }];
+  }
   let columnNames = Object.keys(data[0]);
   for (let i in columnNames) {
     columns.push({

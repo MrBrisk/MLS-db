@@ -127,7 +127,7 @@ async function insertPlayers() {
 
 async function insertGames() {
   const query1 = `
-    INSERT IGNORE INTO game (game_id, date_played, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round)
+    INSERT IGNORE INTO game (game_id, date_played, season, home_team_score, away_team_score, home_team_id, away_team_id, game_type, round)
       VALUES ?`;
   const query2 = `
     INSERT IGNORE INTO home_team_game (team_id, game_id, season)
@@ -165,6 +165,7 @@ async function insertGames() {
         values1.push([
           gameIdMap[summary.sport_event.id],
           date,
+          summary.sport_event.sport_event_context.season.year,
           summary.sport_event_status.home_score,
           summary.sport_event_status.away_score,
           home_team_id,
