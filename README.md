@@ -1,11 +1,6 @@
 # MLS-db
-## EJS Tags
-- `<%` 'Scriptlet' tag, for control-flow, no output
-- `%>`  Plain ending tag
-- `<%=` Outputs the value into the template (HTML escaped)
-- `<%-` Outputs the unescaped value into the template
-- `<%#` Comment tag, no execution, no output
-- `<%%` Outputs a literal '<%'
-- `-%>` Trim-mode (\'newline slurp\') tag, trims following newline
-- `<%_` 'Whitespace Slurping' Scriptlet tag, strips all whitespace before it
-- `_%>` 'Whitespace Slurping' ending tag, removes all whitespace after it
+## Create the MLS_DB SQL server
+- Using the create_db.sql file in the mls_data folder, create the MySQL database that the app will query.
+- Next, insert the data into the database by running insertData.js, also in the mls_data folder.
+## Run the app
+- use `npm run dev` to start the app locally
